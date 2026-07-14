@@ -24,7 +24,7 @@
 
  Configuración XBee:
    - AP = 1  (API Mode Without Escapes)
-   - BD = 7  (115200 bps)
+   - BD = 3  (9600 bps)
    - Mismo PAN ID en ambos módulos
 ========================================================================
 """
@@ -46,8 +46,7 @@ except ImportError:
 try:
     from intelhex import IntelHex
 except ImportError:
-    print("[ERROR] intelhex no encontrado. Instalar con: pip install intelhex")
-    sys.exit(1)
+    IntelHex = None
 
 
 # ===========================================================================
@@ -81,7 +80,9 @@ HASH_DATA_SIZE = 2                 # Tamaño del CRC en bytes al final de la app
 XBEE_START_DELIMITER    = 0x7E
 XBEE_TX_FRAME_TYPE      = 0x10    # Transmit Request
 XBEE_RX_FRAME_TYPE      = 0x90    # Receive Packet
-XBEE_TX_STATUS_TYPE     = 0x8B    # Tx Status (esperado si no usamos frameID=0)
+XBEE_TX_STATUS_TYPE     = 0x8B    # Tx Status
+XBEE_AT_COMMAND_TYPE    = 0x08    # Local AT Command
+XBEE_AT_RESPONSE_TYPE   = 0x88    # Local AT Command Response
 
 # Dirección broadcast XBee (opcional para descubrimiento de dispositivos)
 XBEE_BROADCAST_ADDR_64  = b'\x00\x00\x00\x00\x00\x00\xFF\xFF'
@@ -121,6 +122,7 @@ class BlockType(IntEnum):
 DEFAULT_TIMEOUT_S   = 10.0     # Timeout por respuesta del PIC
 MAX_RETRIES         = 5        # Reintentos máximos por paquete
 INTER_MSG_DELAY_S   = 0.0015  # 1.5 ms entre mensajes (requerido por el bootloader)
+XBEE_SAFE_WRITE_DATA_SIZE = 200  # Evita Tx Status 0x74 (Payload too large) en XBee SX
 
 
 # ===========================================================================
@@ -156,7 +158,7 @@ class XBeeAPI:
     Encapsula y desencapsula tramas XBee API Frame 0x10 / 0x90.
     """
 
-    def __init__(self, port: str, baudrate: int = 115200, timeout: float = DEFAULT_TIMEOUT_S):
+    def __init__(self, port: str, baudrate: int = 9600, timeout: float = DEFAULT_TIMEOUT_S):
         self.log = logging.getLogger("XBeeAPI")
         try:
             self.ser = serial.Serial(port, baudrate=baudrate, timeout=0.05)
@@ -165,6 +167,7 @@ class XBeeAPI:
         self.timeout = timeout
         self.dest_mac  = None   # Dirección MAC de 64 bits del XBee remoto
         self.dest_16   = b'\xFF\xFE'  # Dirección 16-bit del XBee remoto
+        self._tx_frame_id = 1
         self.log.info(f"Puerto {port} abierto a {baudrate} bps")
 
     def close(self):
@@ -175,28 +178,90 @@ class XBeeAPI:
         """Calcula el checksum XBee: 0xFF - (suma de bytes de datos & 0xFF)."""
         return (0xFF - (sum(frame_data) & 0xFF)) & 0xFF
 
+    def _build_api_frame(self, frame_data: bytes) -> bytes:
+        length = len(frame_data)
+        checksum = self._calc_checksum(frame_data)
+        return (
+            bytes([XBEE_START_DELIMITER]) +
+            struct.pack('>H', length) +
+            frame_data +
+            bytes([checksum])
+        )
+
+    def _receive_api_frame(self, timeout: float = None) -> bytes | None:
+        deadline = time.time() + (timeout or self.timeout)
+
+        while time.time() < deadline:
+            byte = self.ser.read(1)
+            if not byte or byte[0] != XBEE_START_DELIMITER:
+                continue
+
+            len_bytes = self.ser.read(2)
+            if len(len_bytes) < 2:
+                continue
+            frame_len = struct.unpack('>H', len_bytes)[0]
+
+            frame_data_raw = self.ser.read(frame_len + 1)
+            if len(frame_data_raw) < frame_len + 1:
+                self.log.warning("Trama incompleta recibida")
+                continue
+
+            frame_data = frame_data_raw[:frame_len]
+            checksum = frame_data_raw[frame_len]
+            if ((sum(frame_data) + checksum) & 0xFF) != 0xFF:
+                frame_type = frame_data[0] if frame_data else 0
+                self.log.warning(f"Checksum inválido en trama recibida (tipo={frame_type:02X})")
+                continue
+
+            return frame_data
+
+        return None
+
+    def local_at(self, command: str, timeout: float = 2.0) -> bytes | None:
+        if len(command) != 2:
+            raise ValueError("El comando AT debe tener 2 caracteres")
+
+        frame_id = 0x01
+        frame_data = bytes([XBEE_AT_COMMAND_TYPE, frame_id]) + command.encode("ascii")
+        frame = self._build_api_frame(frame_data)
+        self.log.debug(f"AT TX {command}: {frame.hex(' ').upper()}")
+        self.ser.write(frame)
+
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            response = self._receive_api_frame(timeout=max(0.05, deadline - time.time()))
+            if response is None:
+                return None
+            self.log.debug(f"AT/RX frame [{len(response)} bytes]: {response.hex(' ').upper()}")
+            if len(response) >= 5 and response[0] == XBEE_AT_RESPONSE_TYPE and response[1] == frame_id:
+                at_name = response[2:4].decode("ascii", errors="replace")
+                status = response[4]
+                if at_name == command:
+                    if status != 0:
+                        self.log.warning(f"AT{command} respondió estado 0x{status:02X}")
+                        return None
+                    return response[5:]
+
+        return None
+
     def build_tx_frame(self, payload: bytes) -> bytes:
         """
         Construye una trama XBee API Transmit Request (0x10).
-        FrameID = 0x00 para deshabilitar la respuesta Tx Status.
+        Usa FrameID distinto de cero para recibir Tx Status (0x8B).
         """
         dest_mac = self.dest_mac if self.dest_mac is not None else XBEE_BROADCAST_ADDR_64
         dest_16 = self.dest_16 if self.dest_mac is not None else XBEE_BROADCAST_ADDR_16
 
-        frame_data = bytes([XBEE_TX_FRAME_TYPE, 0x00])  # Type + FrameID=0 (sin Tx Status)
+        frame_id = self._tx_frame_id
+        self._tx_frame_id = (self._tx_frame_id % 0xFF) + 1
+
+        frame_data = bytes([XBEE_TX_FRAME_TYPE, frame_id])
         frame_data += dest_mac                            # Dirección 64-bit
         frame_data += dest_16                             # Dirección 16-bit
         frame_data += bytes([0x00, 0x00])                 # Broadcast radius + Options
         frame_data += payload
 
-        length = len(frame_data)
-        checksum = self._calc_checksum(frame_data)
-
-        frame = bytes([XBEE_START_DELIMITER])
-        frame += struct.pack('>H', length)
-        frame += frame_data
-        frame += bytes([checksum])
-        return frame
+        return self._build_api_frame(frame_data)
 
     def send(self, payload: bytes):
         """Envía un payload FTP encapsulado en una trama XBee."""
@@ -204,11 +269,50 @@ class XBeeAPI:
         self.log.debug(f"TX [{len(frame)} bytes]: {frame.hex(' ').upper()}")
         self.ser.write(frame)
 
+    def _log_tx_status(self, frame_data: bytes):
+        if len(frame_data) < 7:
+            self.log.warning("Trama Tx Status demasiado corta")
+            return
+
+        frame_id = frame_data[1]
+        addr16 = frame_data[2:4].hex().upper()
+        retry_count = frame_data[4]
+        delivery_status = frame_data[5]
+        discovery_status = frame_data[6]
+
+        status_names = {
+            0x00: "Success",
+            0x01: "MAC ACK failure",
+            0x02: "CCA failure",
+            0x15: "Invalid destination endpoint",
+            0x21: "Network ACK failure",
+            0x22: "Not joined to network",
+            0x23: "Self-addressed",
+            0x24: "Address not found",
+            0x25: "Route not found",
+            0x26: "Broadcast source failed",
+            0x2B: "Invalid binding table index",
+            0x2C: "Invalid endpoint",
+            0x31: "Software error",
+            0x32: "Resource error",
+            0x74: "Payload too large",
+        }
+        status_text = status_names.get(delivery_status, "estado no documentado")
+        message = (
+            f"Tx Status id={frame_id} addr16=0x{addr16} retries={retry_count} "
+            f"delivery=0x{delivery_status:02X} ({status_text}) "
+            f"discovery=0x{discovery_status:02X}"
+        )
+        if delivery_status == 0x00:
+            self.log.debug(message)
+        else:
+            self.log.warning(message)
+
     def receive(self, timeout: float = None) -> bytes | None:
         """
         Espera y recibe una trama XBee API tipo 0x90 (Receive Packet).
         Devuelve solo el payload de la aplicación (datos FTP).
-        Descarta silenciosamente Tx Status (0x8B) y otros tipos de tramas.
+        Registra Tx Status (0x8B) y descarta otros tipos de tramas.
         Retorna None si se agota el timeout.
         """
         deadline = time.time() + (timeout or self.timeout)
@@ -261,8 +365,8 @@ class XBeeAPI:
                 return payload
 
             elif frame_type == XBEE_TX_STATUS_TYPE:
-                # Descartamos Tx Status silenciosamente (no debería llegar con FrameID=0)
-                self.log.debug("Trama Tx Status recibida y descartada")
+                # Registrar el estado de entrega RF y seguir esperando la respuesta del PIC.
+                self._log_tx_status(frame_data)
                 continue
             else:
                 self.log.debug(f"Tipo de trama desconocido 0x{frame_type:02X}, descartado")
@@ -464,6 +568,8 @@ class HexProcessor:
 
     def __init__(self, hex_path: str):
         self.log = logging.getLogger("HexProcessor")
+        if IntelHex is None:
+            raise ValueError("intelhex no encontrado. Instalar con: pip install intelhex")
         self.ih  = IntelHex()
         try:
             self.ih.loadhex(hex_path)
@@ -591,6 +697,9 @@ class HexProcessor:
           }
           data[PAGE_SIZE]
         """
+        if not page_data or len(page_data) > PAGE_SIZE:
+            raise ValueError(f"WRITE_FLASH requiere 1..{PAGE_SIZE} bytes de datos")
+
         block_type = BlockType.WRITE_FLASH
 
         payload = struct.pack('<B', block_type)           # blockType
@@ -605,12 +714,21 @@ class HexProcessor:
         block_length = 2 + len(payload)
         return struct.pack('<H', block_length) + payload
 
+    def build_write_blocks(self, address: int, page_data: bytes,
+                           max_data_size: int = XBEE_SAFE_WRITE_DATA_SIZE) -> list[tuple[int, bytes]]:
+        """Divide una pagina de flash en bloques WRITE_FLASH aptos para XBee."""
+        blocks = []
+        for offset in range(0, len(page_data), max_data_size):
+            chunk = page_data[offset:offset + max_data_size]
+            blocks.append((address + offset, self.build_write_block(address + offset, chunk)))
+        return blocks
+
 
 # ===========================================================================
 #  FLUJO PRINCIPAL DE CARGA
 # ===========================================================================
 
-def flash_firmware(port: str, hex_path: str, baudrate: int = 115200,
+def flash_firmware(port: str, hex_path: str, baudrate: int = 9600,
                    dest_mac: str = None, verbose: bool = False):
     """
     Flujo completo de carga de firmware:
@@ -696,14 +814,25 @@ def flash_firmware(port: str, hex_path: str, baudrate: int = 115200,
 
         start_time = time.time()
         for i, (addr, page_data) in enumerate(pages):
-            write_block = proc.build_write_block(addr, page_data)
+            write_blocks = proc.build_write_blocks(addr, page_data)
             progress = (i + 1) / total_pages * 100
 
             log.info(f"    Página {i+1:3d}/{total_pages} @ 0x{addr:06X} [{progress:.1f}%]")
-            if verbose:
+            for chunk_index, (chunk_addr, write_block) in enumerate(write_blocks, start=1):
+                if verbose:
+                    log.debug(
+                        f"    Chunk {chunk_index}/{len(write_blocks)} @ 0x{chunk_addr:06X} "
+                        f"[{len(write_block)} bytes]: {write_block[:16].hex(' ').upper()}..."
+                    )
+
+                if not mdfu.write_chunk(write_block, timeout=DEFAULT_TIMEOUT_S * 2):
+                    log.error(f"Fallo al escribir bloque @ 0x{chunk_addr:06X}")
+                    return False
+
+            if False and verbose:
                 log.debug(f"    Block [{len(write_block)} bytes]: {write_block[:16].hex(' ').upper()}...")
 
-            if not mdfu.write_chunk(write_block, timeout=DEFAULT_TIMEOUT_S * 2):
+            if False and not mdfu.write_chunk(write_block, timeout=DEFAULT_TIMEOUT_S * 2):
                 log.error(f"Fallo al escribir la página @ 0x{addr:06X}")
                 return False
 
@@ -746,6 +875,73 @@ def setup_logging(verbose: bool):
     )
 
 
+def _format_at_value(command: str, value: bytes) -> str:
+    if command in ("SH", "SL"):
+        return value.hex().upper()
+    if command in ("AP", "BD", "AI"):
+        return f"0x{int.from_bytes(value or bytes([0]), 'big'):X}"
+    if command == "ID":
+        return f"0x{int.from_bytes(value or bytes([0]), 'big'):X}"
+    return value.hex(' ').upper()
+
+
+def show_xbee_info(port: str, baudrate: int = 9600) -> bool:
+    log = logging.getLogger("XBeeInfo")
+    try:
+        xbee = XBeeAPI(port=port, baudrate=baudrate, timeout=2.0)
+    except RuntimeError as e:
+        log.error(str(e))
+        return False
+
+    try:
+        ok = True
+        for command in ("AP", "BD", "ID", "SH", "SL", "AI"):
+            value = xbee.local_at(command, timeout=2.0)
+            if value is None:
+                log.error(f"AT{command}: sin respuesta")
+                ok = False
+            else:
+                log.info(f"AT{command}: {_format_at_value(command, value)}")
+        if not ok:
+            log.error("El XBee local no esta respondiendo en API mode. Revisa COM, baud y AP=1.")
+        return ok
+    finally:
+        xbee.close()
+
+
+def request_remote_bootloader(port: str, baudrate: int, dest_mac: str,
+                              wait_s: float = 2.5) -> bool:
+    log = logging.getLogger("BootRequest")
+    if not dest_mac:
+        log.error("--mac es requerido para mandar BOOT a una app remota")
+        return False
+
+    try:
+        xbee = XBeeAPI(port=port, baudrate=baudrate, timeout=2.0)
+    except RuntimeError as e:
+        log.error(str(e))
+        return False
+
+    try:
+        try:
+            mac_bytes = bytes.fromhex(dest_mac.replace(':', '').replace('-', ''))
+            if len(mac_bytes) != 8:
+                raise ValueError("La MAC debe tener 8 bytes (64 bits)")
+            xbee.dest_mac = mac_bytes
+        except Exception as e:
+            log.error(f"DirecciÃ³n MAC invÃ¡lida: {e}")
+            return False
+
+        log.info(f"Enviando comando BOOT a {mac_bytes.hex(':').upper()}")
+        xbee.send(b"BOOT")
+        xbee.receive(timeout=1.0)
+        log.info(f"Esperando {wait_s:.1f}s para que el PIC reinicie al bootloader...")
+        time.sleep(wait_s)
+        return True
+    finally:
+        xbee.close()
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Carga firmware en un PIC18F47Q43 a través de XBee API (MDFU-FTP)',
@@ -761,22 +957,44 @@ Ejemplos:
   # Con salida detallada (debug):
   python xbee_bootloader_host.py --port COM3 --hex firmware.hex --verbose
 
+  # Pedir a la app que reinicie al bootloader y luego cargar:
+  python xbee_bootloader_host.py --port COM3 --mac 00:13:A2:00:41:23:45:67 --request-bootloader --hex firmware.hex
+
 Nota:
   El PIC18F47Q43 debe estar en modo bootloader antes de ejecutar este script.
   Para activarlo, la aplicación debe escribir 0xAA en EEPROM[0x380000] y hacer RESET.
         """
     )
     parser.add_argument('--port',     required=True,        help='Puerto serie del XBee local (ej. COM3, /dev/ttyUSB0)')
-    parser.add_argument('--hex',      required=True,        help='Archivo .hex de Intel con el nuevo firmware')
-    parser.add_argument('--baud',     type=int, default=115200, help='Baud rate del XBee (default: 115200)')
+    parser.add_argument('--hex',      required=False,       help='Archivo .hex de Intel con el nuevo firmware')
+    parser.add_argument('--baud',     type=int, default=9600, help='Baud rate del XBee (default: 9600)')
     parser.add_argument('--mac',      default=None,         help='MAC 64-bit del XBee remoto (ej. 00:13:A2:00:41:23:45:67)')
     parser.add_argument('--timeout',  type=float, default=DEFAULT_TIMEOUT_S, help=f'Timeout por respuesta en segundos (default: {DEFAULT_TIMEOUT_S})')
+    parser.add_argument('--xbee-info', action='store_true', help='Consulta AP/BD/ID/SH/SL/AI del XBee local y termina')
+    parser.add_argument('--request-bootloader', action='store_true', help='Envia payload BOOT a la app remota antes de cargar o termina si no se pasa --hex')
+    parser.add_argument('--boot-wait', type=float, default=2.5, help='Espera tras mandar BOOT antes de flashear (default: 2.5s)')
     parser.add_argument('--verbose',  action='store_true',  help='Salida detallada (debug)')
 
     args = parser.parse_args()
 
     setup_logging(args.verbose)
 
+    if args.xbee_info:
+        success = show_xbee_info(port=args.port, baudrate=args.baud)
+        sys.exit(0 if success else 1)
+
+    if args.request_bootloader:
+        success = request_remote_bootloader(
+            port=args.port,
+            baudrate=args.baud,
+            dest_mac=args.mac,
+            wait_s=args.boot_wait,
+        )
+        if not success or not args.hex:
+            sys.exit(0 if success else 1)
+
+    if not args.hex:
+        parser.error("--hex es requerido salvo que uses --xbee-info o --request-bootloader")
     if not os.path.isfile(args.hex):
         print(f"[ERROR] Archivo no encontrado: {args.hex}")
         sys.exit(1)

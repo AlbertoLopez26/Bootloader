@@ -29348,9 +29348,17 @@ static uint8_t senderMAC[8] = {0};
 static uint8_t sender16Bit[2] = {0};
 static uint16_t MaxBufferLength = 0U;
 
+static void UartWriteBlocking(uint8_t val)
+{
+    while (!UART1_IsTxReady())
+    {
+    }
+    UART1_Write(val);
+}
+
 
 static uint8_t SendAndCheck(uint8_t val, uint8_t checksum) {
-    UART1_Write(val);
+    UartWriteBlocking(val);
     return (uint8_t)(checksum + val);
 }
 
@@ -29473,9 +29481,9 @@ com_adapter_result_t COM_FrameSet(uint8_t *sourceBuffer, uint16_t sendCount)
     uint8_t checksum = 0;
 
 
-    UART1_Write(0x7E);
-    UART1_Write((uint8_t)(xbeeDataLen >> 8));
-    UART1_Write((uint8_t)(xbeeDataLen & 0xFF));
+    UartWriteBlocking(0x7E);
+    UartWriteBlocking((uint8_t)(xbeeDataLen >> 8));
+    UartWriteBlocking((uint8_t)(xbeeDataLen & 0xFF));
 
 
     checksum = SendAndCheck(0x10, checksum);
@@ -29500,7 +29508,7 @@ com_adapter_result_t COM_FrameSet(uint8_t *sourceBuffer, uint16_t sendCount)
     }
 
 
-    UART1_Write((uint8_t)(0xFF - checksum));
+    UartWriteBlocking((uint8_t)(0xFF - checksum));
 
     return COM_PASS;
 }

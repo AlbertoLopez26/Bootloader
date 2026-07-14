@@ -1,8 +1,8 @@
 Version 4.0 HI-TECH Software Intermediate Code
 "81 mcc_generated_files/bootloader/example/bl_example.c
 [; ;mcc_generated_files/bootloader/example/bl_example.c: 81: static bootloader_state_t BootState;
-[c E17241 0 1 2 3 .. ]
-[n E17241 . BOOTSCAN BOOTLOADER APPLICATION ERROR_STATE  ]
+[c E17237 0 1 2 .. ]
+[n E17237 . BOOTLOADER APPLICATION ERROR_STATE  ]
 "89
 [; ;mcc_generated_files/bootloader/example/bl_example.c: 89:     bl_result_t result = BL_FAIL;
 [c E16990 129 60 195 24 255 189 231 66 36 126 219 170 240 .. ]
@@ -24,16 +24,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 "165 mcc_generated_files/bootloader/example/../library/core/bl_core.h
 [; ;mcc_generated_files/bootloader/example/../library/core/bl_core.h: 165: void BL_ApplicationStart(void);
 [v _BL_ApplicationStart `(v ~T0 @X0 0 ef ]
-"59 mcc_generated_files/bootloader/example/../library/core/bl_boot_verify.h
-[; ;mcc_generated_files/bootloader/example/../library/core/bl_boot_verify.h: 59: bl_result_t CRC32_BOOT_Validate(flash_address_t startAddress, uint32_t length, flash_address_t refAddress);
-[v _CRC32_BOOT_Validate `(E16990 ~T0 @X0 0 ef3`um`ul`um ]
 "58 mcc_generated_files/bootloader/example/../library/core/ftp/bl_ftp.h
 [; ;mcc_generated_files/bootloader/example/../library/core/ftp/bl_ftp.h: 58: bl_result_t FTP_Task(void);
 [v _FTP_Task `(E16990 ~T0 @X0 0 ef ]
-"128 mcc_generated_files/bootloader/example/bl_example.c
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 128: bl_example_result_t BL_ExampleInitialize(void)
-[c E17235 0 1 .. ]
-[n E17235 . EXAMPLE_OK EXAMPLE_FAIL  ]
+"129 mcc_generated_files/bootloader/example/bl_example.c
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 129: bl_example_result_t BL_ExampleInitialize(void)
+[c E17231 0 1 .. ]
+[n E17231 . EXAMPLE_OK EXAMPLE_FAIL  ]
 "67 mcc_generated_files/bootloader/example/../library/core/ftp/bl_ftp.h
 [; ;mcc_generated_files/bootloader/example/../library/core/ftp/bl_ftp.h: 67: bl_result_t FTP_Initialize(void);
 [v _FTP_Initialize `(E16990 ~T0 @X0 0 ef ]
@@ -2580,7 +2577,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSU equ 04FFh ;# ">
 "81 mcc_generated_files/bootloader/example/bl_example.c
 [; ;mcc_generated_files/bootloader/example/bl_example.c: 81: static bootloader_state_t BootState;
-[v _BootState `E17241 ~T0 @X0 1 s ]
+[v _BootState `E17237 ~T0 @X0 1 s ]
 "85
 [; ;mcc_generated_files/bootloader/example/bl_example.c: 85: void BL_Example(void)
 [v _BL_Example `(v ~T0 @X0 1 ef ]
@@ -2618,51 +2615,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 "98
 [; ;mcc_generated_files/bootloader/example/bl_example.c: 98:         break;
 [e $U 2405  ]
-"100
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 100:     case BOOTSCAN:
-[e :U 2411 ]
-"101
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 101:         result = CRC32_BOOT_Validate((flash_address_t)0x0000,(uint32_t)((0x3000) -(2U)),(flash_address_t)((0x3000) - (2U)));
-[e = _result ( _CRC32_BOOT_Validate (3 , , -> -> 0 `i `um -> - -> -> 12288 `i `ui -> 2 `ui `ul -> - -> -> 12288 `i `ui -> 2 `ui `um ]
-"103
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 103:         if (BL_PASS == result)
-[e $ ! == -> . `E16990 0 `ui -> _result `ui 2412  ]
-"104
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 104:         {
-{
-"105
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 105:             BootState = BOOTLOADER;
-[e = _BootState . `E17241 1 ]
-"106
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 106:         }
-}
-[e $U 2413  ]
-"107
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 107:         else
-[e :U 2412 ]
-"108
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 108:         {
-{
-"109
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 109:             BootState = ERROR_STATE;
-[e = _BootState . `E17241 3 ]
-"110
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 110:         }
-}
-[e :U 2413 ]
-"111
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 111:         break;
-[e $U 2405  ]
 "113
 [; ;mcc_generated_files/bootloader/example/bl_example.c: 113:     case BOOTLOADER:
-[e :U 2414 ]
+[e :U 2411 ]
 "114
 [; ;mcc_generated_files/bootloader/example/bl_example.c: 114:         do { LATDbits.LATD1 = 0; } while(0);
-[e :U 2417 ]
+[e :U 2414 ]
 {
 [e = . . _LATDbits 0 1 -> -> 0 `i `uc ]
 }
-[e :U 2416 ]
+[e :U 2413 ]
 "115
 [; ;mcc_generated_files/bootloader/example/bl_example.c: 115:         result = FTP_Task();
 [e = _result ( _FTP_Task ..  ]
@@ -2671,7 +2633,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $U 2405  ]
 "117
 [; ;mcc_generated_files/bootloader/example/bl_example.c: 117:         default:
-[e :U 2418 ]
+[e :U 2415 ]
 "119
 [; ;mcc_generated_files/bootloader/example/bl_example.c: 119:         break;
 [e $U 2405  ]
@@ -2680,159 +2642,161 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e $U 2405  ]
 [e :U 2406 ]
-[e [\ -> _BootState `ui , $ -> . `E17241 2 `ui 2407
- , $ -> . `E17241 0 `ui 2411
- , $ -> . `E17241 1 `ui 2414
- 2418 ]
+[e [\ -> _BootState `ui , $ -> . `E17237 1 `ui 2407
+ , $ -> . `E17237 0 `ui 2411
+ 2415 ]
 [e :U 2405 ]
 "122
 [; ;mcc_generated_files/bootloader/example/bl_example.c: 122:     if ((bl_result_t)BL_ERROR_VERIFICATION_FAIL == result)
-[e $ ! == -> -> . `E16990 10 `E16990 `ui -> _result `ui 2419  ]
+[e $ ! == -> -> . `E16990 10 `E16990 `ui -> _result `ui 2416  ]
 "123
 [; ;mcc_generated_files/bootloader/example/bl_example.c: 123:     {
 {
 "125
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 125:     }
-}
-[e :U 2419 ]
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 125:         BootState = APPLICATION;
+[e = _BootState . `E17237 1 ]
 "126
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 126: }
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 126:     }
+}
+[e :U 2416 ]
+"127
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 127: }
 [e :UE 2404 ]
 }
-"128
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 128: bl_example_result_t BL_ExampleInitialize(void)
-[v _BL_ExampleInitialize `(E17235 ~T0 @X0 1 ef ]
 "129
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 129: {
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 129: bl_example_result_t BL_ExampleInitialize(void)
+[v _BL_ExampleInitialize `(E17231 ~T0 @X0 1 ef ]
+"130
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 130: {
 {
 [e :U _BL_ExampleInitialize ]
 [f ]
-"131
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 131:     bootloaderIsRunning = 1;
+"132
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 132:     bootloaderIsRunning = 1;
 [e = _bootloaderIsRunning -> -> 1 `i `b ]
-"133
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 133:     bl_result_t initStatus = FTP_Initialize();
+"134
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 134:     bl_result_t initStatus = FTP_Initialize();
 [v _initStatus `E16990 ~T0 @X0 1 a ]
 [e = _initStatus ( _FTP_Initialize ..  ]
-"135
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 135:     if((bl_result_t)BL_PASS == initStatus)
-[e $ ! == -> -> . `E16990 0 `E16990 `ui -> _initStatus `ui 2421  ]
 "136
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 136:     {
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 136:     if((bl_result_t)BL_PASS == initStatus)
+[e $ ! == -> -> . `E16990 0 `E16990 `ui -> _initStatus `ui 2418  ]
+"137
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 137:     {
 {
-"140
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 140:         BootState = BOOTSCAN;
-[e = _BootState . `E17241 0 ]
-"149
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 149:         _Bool isForcedEntry = ForcedEntryCheck();
+"143
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 143:         BootState = BOOTLOADER;
+[e = _BootState . `E17237 0 ]
+"150
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 150:         _Bool isForcedEntry = ForcedEntryCheck();
 [v _isForcedEntry `a ~T0 @X0 1 a ]
 [e = _isForcedEntry ( _ForcedEntryCheck ..  ]
-"150
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 150:         _Bool isImageVerified = (_Bool)(BL_PASS == BL_ImageVerify());
+"151
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 151:         _Bool isImageVerified = (_Bool)(BL_PASS == BL_ImageVerify());
 [v _isImageVerified `a ~T0 @X0 1 a ]
 [e = _isImageVerified -> -> == -> . `E16990 0 `ui -> ( _BL_ImageVerify ..  `ui `i `a ]
-"151
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 151:         if ((!isForcedEntry) && isImageVerified)
-[e $ ! && ! != -> _isForcedEntry `i -> 0 `i != -> _isImageVerified `i -> 0 `i 2422  ]
 "152
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 152:         {
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 152:         if ((!isForcedEntry) && isImageVerified)
+[e $ ! && ! != -> _isForcedEntry `i -> 0 `i != -> _isImageVerified `i -> 0 `i 2419  ]
+"153
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 153:         {
 {
-"154
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 154:             BootState = APPLICATION;
-[e = _BootState . `E17241 2 ]
 "155
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 155:         }
-}
-[e :U 2422 ]
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 155:             BootState = APPLICATION;
+[e = _BootState . `E17237 1 ]
 "156
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 156:     }
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 156:         }
 }
-[e $U 2423  ]
+[e :U 2419 ]
 "157
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 157:     else
-[e :U 2421 ]
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 157:     }
+}
+[e $U 2420  ]
 "158
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 158:     {
-{
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 158:     else
+[e :U 2418 ]
 "159
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 159:         BootState = ERROR_STATE;
-[e = _BootState . `E17241 3 ]
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 159:     {
+{
 "160
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 160:     }
-}
-[e :U 2423 ]
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 160:         BootState = ERROR_STATE;
+[e = _BootState . `E17237 2 ]
 "161
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 161:     return EXAMPLE_OK;
-[e ) . `E17235 0 ]
-[e $UE 2420  ]
-"162
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 162: }
-[e :UE 2420 ]
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 161:     }
 }
-"164
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 164: static _Bool ForcedEntryCheck(void)
-[v _ForcedEntryCheck `(a ~T0 @X0 1 sf ]
+[e :U 2420 ]
+"162
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 162:     return EXAMPLE_OK;
+[e ) . `E17231 0 ]
+[e $UE 2417  ]
+"163
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 163: }
+[e :UE 2417 ]
+}
 "165
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 165: {
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 165: static _Bool ForcedEntryCheck(void)
+[v _ForcedEntryCheck `(a ~T0 @X0 1 sf ]
+"166
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 166: {
 {
 [e :U _ForcedEntryCheck ]
 [f ]
-"166
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 166:     _Bool result = 0;
+"167
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 167:     _Bool result = 0;
 [v _result `a ~T0 @X0 1 a ]
 [e = _result -> -> 0 `i `a ]
-"169
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 169:     for (uint8_t i = 0U; i != 0xFFU; i++)
+"170
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 170:     for (uint8_t i = 0U; i != 0xFFU; i++)
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `ui `uc ]
-[e $ != -> _i `ui -> 255 `ui 2425  ]
-[e $U 2426  ]
-[e :U 2425 ]
-"170
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 170:     {
-{
+[e $ != -> _i `ui -> 255 `ui 2422  ]
+[e $U 2423  ]
+[e :U 2422 ]
 "171
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 171:         __asm("nop");
-[; <" nop ;# ">
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 171:     {
+{
 "172
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 172:     }
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 172:         __asm("nop");
+[; <" nop ;# ">
+"173
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 173:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e $ != -> _i `ui -> 255 `ui 2425  ]
-[e :U 2426 ]
+[e $ != -> _i `ui -> 255 `ui 2422  ]
+[e :U 2423 ]
 }
-"175
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 175:     uint8_t flag = EEPROM_Read(((0x380000U) + 0x00U));
+"176
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 176:     uint8_t flag = EEPROM_Read(((0x380000U) + 0x00U));
 [v _flag `uc ~T0 @X0 1 a ]
 [e = _flag ( _EEPROM_Read (1 -> + -> 3670016 `ul -> -> 0 `ui `ul `um ]
-"178
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 178:     if (flag == 0xAA || flag == 0x01U)
-[e $ ! || == -> _flag `i -> 170 `i == -> _flag `ui -> 1 `ui 2428  ]
 "179
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 179:     {
-{
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 179:     if (flag == 0xAA || flag == 0x01U)
+[e $ ! || == -> _flag `i -> 170 `i == -> _flag `ui -> 1 `ui 2425  ]
 "180
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 180:         result = 1;
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 180:     {
+{
+"181
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 181:         result = 1;
 [e = _result -> -> 1 `i `a ]
-"183
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 183:         NVM_UnlockKeySet((0xAA55U));
-[e ( _NVM_UnlockKeySet (1 -> -> 43605 `ui `us ]
 "184
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 184:         EEPROM_Write(((0x380000U) + 0x00U), 0x00);
-[e ( _EEPROM_Write (2 , -> + -> 3670016 `ul -> -> 0 `ui `ul `um -> -> 0 `i `uc ]
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 184:         NVM_UnlockKeySet((0xAA55U));
+[e ( _NVM_UnlockKeySet (1 -> -> 43605 `ui `us ]
 "185
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 185:         NVM_UnlockKeyClear();
-[e ( _NVM_UnlockKeyClear ..  ]
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 185:         EEPROM_Write(((0x380000U) + 0x00U), 0x00);
+[e ( _EEPROM_Write (2 , -> + -> 3670016 `ul -> -> 0 `ui `ul `um -> -> 0 `i `uc ]
 "186
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 186:     }
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 186:         NVM_UnlockKeyClear();
+[e ( _NVM_UnlockKeyClear ..  ]
+"187
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 187:     }
 }
-[e :U 2428 ]
-"188
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 188:     return result;
-[e ) _result ]
-[e $UE 2424  ]
+[e :U 2425 ]
 "189
-[; ;mcc_generated_files/bootloader/example/bl_example.c: 189: }
-[e :UE 2424 ]
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 189:     return result;
+[e ) _result ]
+[e $UE 2421  ]
+"190
+[; ;mcc_generated_files/bootloader/example/bl_example.c: 190: }
+[e :UE 2421 ]
 }

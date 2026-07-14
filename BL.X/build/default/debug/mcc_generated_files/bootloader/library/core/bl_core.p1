@@ -31,8 +31,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "248 mcc_generated_files/bootloader/library/core/../../../nvm/nvm.h
 [; ;mcc_generated_files/bootloader/library/core/../../../nvm/nvm.h: 248: uint16_t FLASH_PageOffsetGet(flash_address_t address);
 [v _FLASH_PageOffsetGet `(us ~T0 @X0 0 ef1`um ]
-"135 mcc_generated_files/bootloader/library/core/bl_core.c
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 135:                 bl_mem_result_t memoryStatus = BL_FlashWrite(
+"143 mcc_generated_files/bootloader/library/core/bl_core.c
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 143:                 bl_mem_result_t memoryStatus = BL_FlashWrite(
 [c E17207 0 1 2 .. ]
 [n E17207 . BL_MEM_PASS BL_MEM_FAIL BL_MEM_INVALID_ARG  ]
 "197 mcc_generated_files/bootloader/library/core/bl_memory.h
@@ -57,8 +57,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "93 mcc_generated_files/bootloader/library/core/bl_core.c
 [; ;mcc_generated_files/bootloader/library/core/bl_core.c: 93: static void DownloadAreaErase(uint32_t startAddress, uint16_t pageEraseUnlockKey);
 [v _DownloadAreaErase `(v ~T0 @X0 0 sf2`ul`us ]
-"367
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 367:     nvm_status_t errorStatus;
+"375
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 375:     nvm_status_t errorStatus;
 [c E16977 0 1 .. ]
 [n E16977 . NVM_OK NVM_ERROR  ]
 "165 mcc_generated_files/bootloader/library/core/../../../nvm/nvm.h
@@ -2689,271 +2689,266 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _stagingAreaOffset `um ~T0 @X0 1 a ]
 [e = _stagingAreaOffset -> - -> -> 12288 `i `ul -> -> 12288 `i `ul `um ]
 "130
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 130:             if ((FLASH_PageOffsetGet((flash_address_t) (commandHeader.startAddress + stagingAreaOffset)) == (flash_address_t) 0)
-[e $ ! && == -> ( _FLASH_PageOffsetGet (1 -> + . _commandHeader 0 -> _stagingAreaOffset `ul `um `um -> -> 0 `i `um >= -> + . _commandHeader 0 -> _stagingAreaOffset `ul `um -> -> 12288 `i `um 2414  ]
-"133
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 133:             {
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 130:             uint16_t writeLength = 0U;
+[v _writeLength `us ~T0 @X0 1 a ]
+[e = _writeLength -> -> 0 `ui `us ]
+"131
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 131:             if (bufferLength > (((uint16_t)sizeof (bl_command_header_t)) + ((uint16_t)sizeof (bl_block_header_t))))
+[e $ ! > -> _bufferLength `ui + -> -> -> # `S2400 `ui `us `ui -> -> -> # `S2401 `ui `us `ui 2414  ]
+"132
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 132:             {
 {
-"135
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 135:                 bl_mem_result_t memoryStatus = BL_FlashWrite(
-[v _memoryStatus `E17207 ~T0 @X0 1 a ]
-[e = _memoryStatus ( _BL_FlashWrite (3 , , + -> . _commandHeader 0 `um _stagingAreaOffset &U *U + _bootDataPtr * -> + -> -> -> # `S2400 `ui `us `ui -> -> -> # `S2401 `ui `us `ui `ux -> -> # *U _bootDataPtr `ui `ux -> 256 `ui ]
+"133
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 133:                 writeLength = (uint16_t)(bufferLength - (((uint16_t)sizeof (bl_command_header_t)) + ((uint16_t)sizeof (bl_block_header_t))));
+[e = _writeLength -> - -> _bufferLength `ui + -> -> -> # `S2400 `ui `us `ui -> -> -> # `S2401 `ui `us `ui `us ]
+"134
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 134:             }
+}
+[e :U 2414 ]
+"136
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 136:             flash_address_t targetAddress = (flash_address_t) commandHeader.startAddress + stagingAreaOffset;
+[v _targetAddress `um ~T0 @X0 1 a ]
+[e = _targetAddress + -> . _commandHeader 0 `um _stagingAreaOffset ]
+"137
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 137:             if ((targetAddress >= (flash_address_t) (0x3000))
+[e $ ! && && && >= _targetAddress -> -> 12288 `i `um > -> _writeLength `ui -> 0 `ui <= -> _writeLength `ui -> -> -> 256 `ui `us `ui <= + -> ( _FLASH_PageOffsetGet (1 _targetAddress `ui -> _writeLength `ui -> -> -> 256 `ui `us `ui 2415  ]
 "141
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 141:                 if (memoryStatus == (bl_mem_result_t)BL_MEM_PASS)
-[e $ ! == -> _memoryStatus `ui -> -> . `E17207 0 `E17207 `ui 2415  ]
-"142
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 142:                 {
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 141:             {
 {
 "143
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 143:                     bootCommandStatus = BL_PASS;
-[e = _bootCommandStatus . `E36 0 ]
-"144
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 144:                 }
-}
-[e $U 2416  ]
-"145
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 145:                 else
-[e :U 2415 ]
-"146
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 146:                 {
-{
-"147
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 147:                     bootCommandStatus = BL_ERROR_COMMAND_PROCESSING;
-[e = _bootCommandStatus . `E36 9 ]
-"148
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 148:                 }
-}
-[e :U 2416 ]
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 143:                 bl_mem_result_t memoryStatus = BL_FlashWrite(
+[v _memoryStatus `E17207 ~T0 @X0 1 a ]
+[e = _memoryStatus ( _BL_FlashWrite (3 , , _targetAddress &U *U + _bootDataPtr * -> + -> -> -> # `S2400 `ui `us `ui -> -> -> # `S2401 `ui `us `ui `ux -> -> # *U _bootDataPtr `ui `ux -> _writeLength `ui ]
 "149
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 149:             }
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 149:                 if (memoryStatus == (bl_mem_result_t)BL_MEM_PASS)
+[e $ ! == -> _memoryStatus `ui -> -> . `E17207 0 `E17207 `ui 2416  ]
+"150
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 150:                 {
+{
+"151
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 151:                     bootCommandStatus = BL_PASS;
+[e = _bootCommandStatus . `E36 0 ]
+"152
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 152:                 }
 }
 [e $U 2417  ]
-"150
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 150:             else
-[e :U 2414 ]
-"151
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 151:             {
-{
-"152
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 152:                 bootCommandStatus = BL_ERROR_ADDRESS_OUT_OF_RANGE;
-[e = _bootCommandStatus . `E36 8 ]
 "153
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 153:             }
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 153:                 else
+[e :U 2416 ]
+"154
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 154:                 {
+{
+"155
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 155:                     bootCommandStatus = BL_ERROR_COMMAND_PROCESSING;
+[e = _bootCommandStatus . `E36 9 ]
+"156
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 156:                 }
 }
 [e :U 2417 ]
-"156
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 156:             BL_MemoryUnlockKeysClear();
-[e ( _BL_MemoryUnlockKeysClear ..  ]
+"157
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 157:             }
+}
+[e $U 2418  ]
 "158
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 158:         }
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 158:             else
+[e :U 2415 ]
+"159
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 159:             {
+{
+"160
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 160:                 bootCommandStatus = BL_ERROR_ADDRESS_OUT_OF_RANGE;
+[e = _bootCommandStatus . `E36 8 ]
+"161
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 161:             }
+}
+[e :U 2418 ]
+"164
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 164:             BL_MemoryUnlockKeysClear();
+[e ( _BL_MemoryUnlockKeysClear ..  ]
+"166
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 166:         }
 }
 [e :U 2413 ]
-"159
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 159:         break;
+"167
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 167:         break;
 [e $U 2409  ]
-"190
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 190:     default:
-[e :U 2418 ]
-"191
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 191:         bootCommandStatus = BL_ERROR_UNKNOWN_COMMAND;
+"198
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 198:     default:
+[e :U 2419 ]
+"199
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 199:         bootCommandStatus = BL_ERROR_UNKNOWN_COMMAND;
 [e = _bootCommandStatus . `E36 7 ]
-"192
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 192:         break;
+"200
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 200:         break;
 [e $U 2409  ]
-"193
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 193:     }
+"201
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 201:     }
 }
 [e $U 2409  ]
 [e :U 2410 ]
 [e [\ -> . _blockHeader 1 `ui , $ -> . `E17012 0 `ui 2411
  , $ -> . `E17012 1 `ui 2412
- 2418 ]
+ 2419 ]
 [e :U 2409 ]
-"195
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 195:     return bootCommandStatus;
+"203
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 203:     return bootCommandStatus;
 [e ) _bootCommandStatus ]
 [e $UE 2408  ]
-"196
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 196: }
+"204
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 204: }
 [e :UE 2408 ]
 }
-"198
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 198: void BL_ApplicationStart(void)
+"206
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 206: void BL_ApplicationStart(void)
 [v _BL_ApplicationStart `(v ~T0 @X0 1 ef ]
-"199
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 199: {
+"207
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 207: {
 {
 [e :U _BL_ApplicationStart ]
 [f ]
-"206
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 206:     STKPTR = 0x00U;
+"214
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 214:     STKPTR = 0x00U;
 [e = _STKPTR -> -> 0 `ui `uc ]
-"207
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 207:     BSR = 0x00U;
+"215
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 215:     BSR = 0x00U;
 [e = _BSR -> -> 0 `ui `uc ]
-"208
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 208:     __asm("goto " "(0x3000)");
+"216
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 216:     __asm("goto " "(0x3000)");
 [; <" goto (0x3000) ;# ">
-"217
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 217: }
-[e :UE 2419 ]
+"225
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 225: }
+[e :UE 2420 ]
 }
-"219
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 219: bl_result_t BL_Initialize(void)
+"227
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 227: bl_result_t BL_Initialize(void)
 [v _BL_Initialize `(E36 ~T0 @X0 1 ef ]
-"220
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 220: {
+"228
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 228: {
 {
 [e :U _BL_Initialize ]
 [f ]
-"221
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 221:     bl_result_t initResult = BL_PASS;
+"229
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 229:     bl_result_t initResult = BL_PASS;
 [v _initResult `E36 ~T0 @X0 1 a ]
 [e = _initResult . `E36 0 ]
-"224
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 224:     bootloaderCoreUnlocked = 0;
+"232
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 232:     bootloaderCoreUnlocked = 0;
 [e = _bootloaderCoreUnlocked -> -> 0 `i `a ]
-"226
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 226:     return initResult;
+"234
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 234:     return initResult;
 [e ) _initResult ]
-[e $UE 2420  ]
-"227
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 227: }
-[e :UE 2420 ]
+[e $UE 2421  ]
+"235
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 235: }
+[e :UE 2421 ]
 }
-"229
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 229: static bl_result_t BootloaderProcessorUnlock(uint8_t * bufferPtr)
+"237
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 237: static bl_result_t BootloaderProcessorUnlock(uint8_t * bufferPtr)
 [v _BootloaderProcessorUnlock `(E36 ~T0 @X0 1 sf1`*uc ]
-"230
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 230: {
+"238
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 238: {
 {
 [e :U _BootloaderProcessorUnlock ]
-"229
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 229: static bl_result_t BootloaderProcessorUnlock(uint8_t * bufferPtr)
+"237
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 237: static bl_result_t BootloaderProcessorUnlock(uint8_t * bufferPtr)
 [v _bufferPtr `*uc ~T0 @X0 1 r1 ]
-"230
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 230: {
+"238
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 238: {
 [f ]
-"231
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 231:     bl_result_t commandStatus = BL_FAIL;
+"239
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 239:     bl_result_t commandStatus = BL_FAIL;
 [v _commandStatus `E36 ~T0 @X0 1 a ]
 [e = _commandStatus . `E36 2 ]
-"233
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 233:     bl_unlock_boot_metadata_t metadataPacket;
+"241
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 241:     bl_unlock_boot_metadata_t metadataPacket;
 [v _metadataPacket `S2407 ~T0 @X0 1 a ]
-"234
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 234:     (void) memcpy((void *) &metadataPacket, (void *) bufferPtr,(size_t)(sizeof (bl_unlock_boot_metadata_t)));
+"242
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 242:     (void) memcpy((void *) &metadataPacket, (void *) bufferPtr,(size_t)(sizeof (bl_unlock_boot_metadata_t)));
 [e ( _memcpy (3 , , -> &U _metadataPacket `*v -> -> _bufferPtr `*v `*Cv -> # `S2407 `ui ]
-"247
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 247:     if((metadataPacket.imageVersionMajor) != (uint8_t) (0x00))
-[e $ ! != -> . _metadataPacket 3 `i -> -> -> 0 `i `uc `i 2422  ]
-"248
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 248:     {
+"255
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 255:     if((metadataPacket.imageVersionMajor) != (uint8_t) (0x00))
+[e $ ! != -> . _metadataPacket 3 `i -> -> -> 0 `i `uc `i 2423  ]
+"256
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 256:     {
 {
-"249
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 249:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
+"257
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 257:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
 [e = _commandStatus . `E36 10 ]
-"250
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 250:     }
+"258
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 258:     }
 }
-[e $U 2423  ]
-"261
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 261:     else if(metadataPacket.imageVersionMinor > (uint8_t) (0x03))
-[e :U 2422 ]
-[e $ ! > -> . _metadataPacket 2 `i -> -> -> 3 `i `uc `i 2424  ]
-"262
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 262:     {
+[e $U 2424  ]
+"269
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 269:     else if(metadataPacket.imageVersionMinor > (uint8_t) (0x03))
+[e :U 2423 ]
+[e $ ! > -> . _metadataPacket 2 `i -> -> -> 3 `i `uc `i 2425  ]
+"270
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 270:     {
 {
-"263
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 263:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
+"271
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 271:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
 [e = _commandStatus . `E36 10 ]
-"264
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 264:     }
-}
-[e $U 2425  ]
-"265
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 265:     else
-[e :U 2424 ]
-"266
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 266:     {
-{
 "272
 [; ;mcc_generated_files/bootloader/library/core/bl_core.c: 272:     }
 }
+[e $U 2426  ]
+"273
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 273:     else
 [e :U 2425 ]
-[e :U 2423 ]
-"276
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 276:     device_id_data_t deviceId = DeviceID_Read((0x3FFFFEU));
-[v _deviceId `us ~T0 @X0 1 a ]
-[e = _deviceId ( _DeviceID_Read (1 -> -> 4194302 `ul `um ]
-"280
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 280:     if (deviceId != (device_id_data_t) metadataPacket.deviceId)
-[e $ ! != -> _deviceId `ui -> -> . _metadataPacket 4 `us `ui 2426  ]
-"281
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 281:     {
+"274
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 274:     {
 {
-"282
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 282:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
-[e = _commandStatus . `E36 10 ]
-"283
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 283:     }
+"280
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 280:     }
 }
 [e :U 2426 ]
-"285
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 285:     if (metadataPacket.maxPayloadSize != ((uint16_t) (256U)))
-[e $ ! != -> . _metadataPacket 5 `ui -> -> -> 256 `ui `us `ui 2427  ]
-"286
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 286:     {
-{
-"287
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 287:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
-[e = _commandStatus . `E36 10 ]
+[e :U 2424 ]
+"284
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 284:     device_id_data_t deviceId = DeviceID_Read((0x3FFFFEU));
+[v _deviceId `us ~T0 @X0 1 a ]
+[e = _deviceId ( _DeviceID_Read (1 -> -> 4194302 `ul `um ]
 "288
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 288:     }
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 288:     if (deviceId != (device_id_data_t) metadataPacket.deviceId)
+[e $ ! != -> _deviceId `ui -> -> . _metadataPacket 4 `us `ui 2427  ]
+"289
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 289:     {
+{
+"290
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 290:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
+[e = _commandStatus . `E36 10 ]
+"291
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 291:     }
 }
 [e :U 2427 ]
-"292
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 292:     if (metadataPacket.commandHeader.startAddress != (uint32_t) (0x3000))
-[e $ ! != . . _metadataPacket 6 0 -> -> 12288 `i `ul 2428  ]
 "293
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 293:     {
-{
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 293:     if (metadataPacket.maxPayloadSize != ((uint16_t) (256U)))
+[e $ ! != -> . _metadataPacket 5 `ui -> -> -> 256 `ui `us `ui 2428  ]
 "294
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 294:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
-[e = _commandStatus . `E36 10 ]
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 294:     {
+{
 "295
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 295:     }
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 295:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
+[e = _commandStatus . `E36 10 ]
+"296
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 296:     }
 }
 [e :U 2428 ]
-"316
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 316:     if (metadataPacket.commandHeader.pageEraseUnlockKey != (uint16_t) (0xAA55U))
-[e $ ! != -> . . _metadataPacket 6 1 `ui -> -> -> 43605 `ui `us `ui 2429  ]
-"317
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 317:     {
+"300
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 300:     if (metadataPacket.commandHeader.startAddress != (uint32_t) (0x3000))
+[e $ ! != . . _metadataPacket 6 0 -> -> 12288 `i `ul 2429  ]
+"301
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 301:     {
 {
-"318
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 318:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
+"302
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 302:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
 [e = _commandStatus . `E36 10 ]
-"319
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 319:     }
+"303
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 303:     }
 }
 [e :U 2429 ]
-"320
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 320:     if (metadataPacket.commandHeader.pageWriteUnlockKey != (uint16_t) (0xAA55U))
-[e $ ! != -> . . _metadataPacket 6 2 `ui -> -> -> 43605 `ui `us `ui 2430  ]
-"321
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 321:     {
-{
-"322
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 322:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
-[e = _commandStatus . `E36 10 ]
-"323
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 323:     }
-}
-[e :U 2430 ]
 "324
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 324:     if (metadataPacket.commandHeader.pageReadUnlockKey != 0x0000U)
-[e $ ! != -> . . _metadataPacket 6 4 `ui -> 0 `ui 2431  ]
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 324:     if (metadataPacket.commandHeader.pageEraseUnlockKey != (uint16_t) (0xAA55U))
+[e $ ! != -> . . _metadataPacket 6 1 `ui -> -> -> 43605 `ui `us `ui 2430  ]
 "325
 [; ;mcc_generated_files/bootloader/library/core/bl_core.c: 325:     {
 {
@@ -2963,10 +2958,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "327
 [; ;mcc_generated_files/bootloader/library/core/bl_core.c: 327:     }
 }
-[e :U 2431 ]
+[e :U 2430 ]
 "328
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 328:     if (metadataPacket.commandHeader.byteWriteUnlockKey != (uint16_t) (0xAA55U))
-[e $ ! != -> . . _metadataPacket 6 3 `ui -> -> -> 43605 `ui `us `ui 2432  ]
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 328:     if (metadataPacket.commandHeader.pageWriteUnlockKey != (uint16_t) (0xAA55U))
+[e $ ! != -> . . _metadataPacket 6 2 `ui -> -> -> 43605 `ui `us `ui 2431  ]
 "329
 [; ;mcc_generated_files/bootloader/library/core/bl_core.c: 329:     {
 {
@@ -2976,117 +2971,143 @@ Version 4.0 HI-TECH Software Intermediate Code
 "331
 [; ;mcc_generated_files/bootloader/library/core/bl_core.c: 331:     }
 }
-[e :U 2432 ]
-"351
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 351:     if (commandStatus != (bl_result_t)BL_ERROR_VERIFICATION_FAIL)
-[e $ ! != -> _commandStatus `ui -> -> . `E36 10 `E36 `ui 2433  ]
-"352
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 352:     {
+[e :U 2431 ]
+"332
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 332:     if (metadataPacket.commandHeader.pageReadUnlockKey != 0x0000U)
+[e $ ! != -> . . _metadataPacket 6 4 `ui -> 0 `ui 2432  ]
+"333
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 333:     {
 {
-"353
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 353:         bootloaderCoreUnlocked = 1;
-[e = _bootloaderCoreUnlocked -> -> 1 `i `a ]
-"354
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 354:         commandStatus = BL_PASS;
-[e = _commandStatus . `E36 0 ]
-"355
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 355:         DownloadAreaErase(
-[e ( _DownloadAreaErase (2 , -> -> 12288 `i `ul . . _metadataPacket 6 1 ]
-"359
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 359:     }
+"334
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 334:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
+[e = _commandStatus . `E36 10 ]
+"335
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 335:     }
+}
+[e :U 2432 ]
+"336
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 336:     if (metadataPacket.commandHeader.byteWriteUnlockKey != (uint16_t) (0xAA55U))
+[e $ ! != -> . . _metadataPacket 6 3 `ui -> -> -> 43605 `ui `us `ui 2433  ]
+"337
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 337:     {
+{
+"338
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 338:         commandStatus = BL_ERROR_VERIFICATION_FAIL;
+[e = _commandStatus . `E36 10 ]
+"339
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 339:     }
 }
 [e :U 2433 ]
+"359
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 359:     if (commandStatus != (bl_result_t)BL_ERROR_VERIFICATION_FAIL)
+[e $ ! != -> _commandStatus `ui -> -> . `E36 10 `E36 `ui 2434  ]
+"360
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 360:     {
+{
 "361
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 361:     return commandStatus;
-[e ) _commandStatus ]
-[e $UE 2421  ]
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 361:         bootloaderCoreUnlocked = 1;
+[e = _bootloaderCoreUnlocked -> -> 1 `i `a ]
 "362
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 362: }
-[e :UE 2421 ]
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 362:         commandStatus = BL_PASS;
+[e = _commandStatus . `E36 0 ]
+"363
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 363:         DownloadAreaErase(
+[e ( _DownloadAreaErase (2 , -> -> 12288 `i `ul . . _metadataPacket 6 1 ]
+"367
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 367:     }
 }
-"365
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 365: static void DownloadAreaErase(uint32_t startAddress, uint16_t pageEraseUnlockKey)
+[e :U 2434 ]
+"369
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 369:     return commandStatus;
+[e ) _commandStatus ]
+[e $UE 2422  ]
+"370
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 370: }
+[e :UE 2422 ]
+}
+"373
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 373: static void DownloadAreaErase(uint32_t startAddress, uint16_t pageEraseUnlockKey)
 [v _DownloadAreaErase `(v ~T0 @X0 1 sf2`ul`us ]
-"366
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 366: {
+"374
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 374: {
 {
 [e :U _DownloadAreaErase ]
-"365
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 365: static void DownloadAreaErase(uint32_t startAddress, uint16_t pageEraseUnlockKey)
+"373
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 373: static void DownloadAreaErase(uint32_t startAddress, uint16_t pageEraseUnlockKey)
 [v _startAddress `ul ~T0 @X0 1 r1 ]
 [v _pageEraseUnlockKey `us ~T0 @X0 1 r2 ]
-"366
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 366: {
+"374
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 374: {
 [f ]
-"367
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 367:     nvm_status_t errorStatus;
+"375
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 375:     nvm_status_t errorStatus;
 [v _errorStatus `E16977 ~T0 @X0 1 a ]
-"369
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 369:     flash_address_t address;
+"377
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 377:     flash_address_t address;
 [v _address `um ~T0 @X0 1 a ]
-"370
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 370:     address = (flash_address_t) startAddress;
+"378
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 378:     address = (flash_address_t) startAddress;
 [e = _address -> _startAddress `um ]
-"373
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 373:     uint16_t unlockKey = pageEraseUnlockKey;
+"381
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 381:     uint16_t unlockKey = pageEraseUnlockKey;
 [v _unlockKey `us ~T0 @X0 1 a ]
 [e = _unlockKey _pageEraseUnlockKey ]
-"376
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 376:     while (address < (flash_address_t)(0x1FFFF))
-[e $U 2435  ]
-[e :U 2436 ]
-"377
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 377:     {
-{
-"379
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 379:         NVM_UnlockKeySet(unlockKey);
-[e ( _NVM_UnlockKeySet (1 _unlockKey ]
-"381
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 381:         errorStatus = FLASH_PageErase(address);
-[e = _errorStatus ( _FLASH_PageErase (1 _address ]
-"383
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 383:         while(1 == NVM_IsBusy())
-[e $U 2438  ]
-[e :U 2439 ]
 "384
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 384:         {
-{
-"386
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 386:         }
-}
-[e :U 2438 ]
-"383
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 383:         while(1 == NVM_IsBusy())
-[e $ == -> 1 `i -> ( _NVM_IsBusy ..  `i 2439  ]
-[e :U 2440 ]
-"394
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 394:         NVM_UnlockKeyClear();
-[e ( _NVM_UnlockKeyClear ..  ]
-"396
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 396:         if (NVM_OK != errorStatus)
-[e $ ! != -> . `E16977 0 `ui -> _errorStatus `ui 2441  ]
-"397
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 397:         {
-{
-"398
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 398:             break;
-[e $U 2437  ]
-"399
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 399:         }
-}
-[e :U 2441 ]
-"400
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 400:         address += (256U);
-[e =+ _address -> -> 256 `ui `um ]
-"401
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 401:     }
-}
-[e :U 2435 ]
-"376
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 376:     while (address < (flash_address_t)(0x1FFFF))
-[e $ < _address -> -> 131071 `l `um 2436  ]
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 384:     while (address < (flash_address_t)(0x1FFFF))
+[e $U 2436  ]
 [e :U 2437 ]
+"385
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 385:     {
+{
+"387
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 387:         NVM_UnlockKeySet(unlockKey);
+[e ( _NVM_UnlockKeySet (1 _unlockKey ]
+"389
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 389:         errorStatus = FLASH_PageErase(address);
+[e = _errorStatus ( _FLASH_PageErase (1 _address ]
+"391
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 391:         while(1 == NVM_IsBusy())
+[e $U 2439  ]
+[e :U 2440 ]
+"392
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 392:         {
+{
+"394
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 394:         }
+}
+[e :U 2439 ]
+"391
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 391:         while(1 == NVM_IsBusy())
+[e $ == -> 1 `i -> ( _NVM_IsBusy ..  `i 2440  ]
+[e :U 2441 ]
 "402
-[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 402: }
-[e :UE 2434 ]
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 402:         NVM_UnlockKeyClear();
+[e ( _NVM_UnlockKeyClear ..  ]
+"404
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 404:         if (NVM_OK != errorStatus)
+[e $ ! != -> . `E16977 0 `ui -> _errorStatus `ui 2442  ]
+"405
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 405:         {
+{
+"406
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 406:             break;
+[e $U 2438  ]
+"407
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 407:         }
+}
+[e :U 2442 ]
+"408
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 408:         address += (256U);
+[e =+ _address -> -> 256 `ui `um ]
+"409
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 409:     }
+}
+[e :U 2436 ]
+"384
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 384:     while (address < (flash_address_t)(0x1FFFF))
+[e $ < _address -> -> 131071 `l `um 2437  ]
+[e :U 2438 ]
+"410
+[; ;mcc_generated_files/bootloader/library/core/bl_core.c: 410: }
+[e :UE 2435 ]
 }

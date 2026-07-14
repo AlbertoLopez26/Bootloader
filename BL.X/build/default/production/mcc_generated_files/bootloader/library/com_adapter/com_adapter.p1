@@ -1,15 +1,18 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"288 mcc_generated_files/bootloader/library/com_adapter/../../../system/../uart/uart1.h
+"249 mcc_generated_files/bootloader/library/com_adapter/../../../system/../uart/uart1.h
+[; ;mcc_generated_files/bootloader/library/com_adapter/../../../system/../uart/uart1.h: 249: _Bool UART1_IsTxReady(void);
+[v _UART1_IsTxReady `(a ~T0 @X0 0 ef ]
+"288
 [; ;mcc_generated_files/bootloader/library/com_adapter/../../../system/../uart/uart1.h: 288: void UART1_Write(uint8_t txData);
 [v _UART1_Write `(v ~T0 @X0 0 ef1`uc ]
-"25 mcc_generated_files/bootloader/library/com_adapter/com_adapter.c
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 25: com_adapter_result_t COM_FrameTransfer(uint8_t *destBuffer, uint16_t *receiveCount)
+"33 mcc_generated_files/bootloader/library/com_adapter/com_adapter.c
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 33: com_adapter_result_t COM_FrameTransfer(uint8_t *destBuffer, uint16_t *receiveCount)
 [c E17149 231 195 150 105 24 60 126 .. ]
 [n E17149 . COM_PASS COM_FAIL COM_INVALID_ARG COM_BUFFER_ERROR COM_BUSY COM_TRANSPORT_FAILURE COM_SEND_COMPLETE  ]
-"29
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 29:     } state = XB_WAIT_START;
-[c E17175 0 1 2 3 4 .. ]
-[n E17175 . XB_WAIT_START XB_READ_LEN_MSB XB_READ_LEN_LSB XB_READ_DATA XB_VERIFY_CHK  ]
+"37
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 37:     } state = XB_WAIT_START;
+[c E17177 0 1 2 3 4 .. ]
+[n E17177 . XB_WAIT_START XB_READ_LEN_MSB XB_READ_LEN_LSB XB_READ_DATA XB_VERIFY_CHK  ]
 "268 mcc_generated_files/bootloader/library/com_adapter/../../../system/../uart/uart1.h
 [; ;mcc_generated_files/bootloader/library/com_adapter/../../../system/../uart/uart1.h: 268: size_t UART1_ErrorGet(void);
 [v _UART1_ErrorGet `(ui ~T0 @X0 0 ef ]
@@ -2582,499 +2585,534 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i _MaxBufferLength
 -> -> 0 `ui `us
 ]
+"18
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 18: static void UartWriteBlocking(uint8_t val)
+[v _UartWriteBlocking `(v ~T0 @X0 1 sf1`uc ]
 "19
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 19: static uint8_t SendAndCheck(uint8_t val, uint8_t checksum) {
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 19: {
+{
+[e :U _UartWriteBlocking ]
+"18
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 18: static void UartWriteBlocking(uint8_t val)
+[v _val `uc ~T0 @X0 1 r1 ]
+"19
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 19: {
+[f ]
+"20
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 20:     while (!UART1_IsTxReady())
+[e $U 2403  ]
+[e :U 2404 ]
+"21
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 21:     {
+{
+"22
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 22:     }
+}
+[e :U 2403 ]
+"20
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 20:     while (!UART1_IsTxReady())
+[e $ ! != -> ( _UART1_IsTxReady ..  `i -> 0 `i 2404  ]
+[e :U 2405 ]
+"23
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 23:     UART1_Write(val);
+[e ( _UART1_Write (1 _val ]
+"24
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 24: }
+[e :UE 2402 ]
+}
+"27
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 27: static uint8_t SendAndCheck(uint8_t val, uint8_t checksum) {
 [v _SendAndCheck `(uc ~T0 @X0 1 sf2`uc`uc ]
 {
 [e :U _SendAndCheck ]
 [v _val `uc ~T0 @X0 1 r1 ]
 [v _checksum `uc ~T0 @X0 1 r2 ]
 [f ]
-"20
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 20:     UART1_Write(val);
-[e ( _UART1_Write (1 _val ]
-"21
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 21:     return (uint8_t)(checksum + val);
+"28
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 28:     UartWriteBlocking(val);
+[e ( _UartWriteBlocking (1 _val ]
+"29
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 29:     return (uint8_t)(checksum + val);
 [e ) -> + -> _checksum `i -> _val `i `uc ]
-[e $UE 2402  ]
-"22
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 22: }
-[e :UE 2402 ]
+[e $UE 2406  ]
+"30
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 30: }
+[e :UE 2406 ]
 }
-"25
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 25: com_adapter_result_t COM_FrameTransfer(uint8_t *destBuffer, uint16_t *receiveCount)
+"33
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 33: com_adapter_result_t COM_FrameTransfer(uint8_t *destBuffer, uint16_t *receiveCount)
 [v _COM_FrameTransfer `(E17149 ~T0 @X0 1 ef2`*uc`*us ]
-"26
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 26: {
+"34
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 34: {
 {
 [e :U _COM_FrameTransfer ]
-"25
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 25: com_adapter_result_t COM_FrameTransfer(uint8_t *destBuffer, uint16_t *receiveCount)
+"33
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 33: com_adapter_result_t COM_FrameTransfer(uint8_t *destBuffer, uint16_t *receiveCount)
 [v _destBuffer `*uc ~T0 @X0 1 r1 ]
 [v _receiveCount `*us ~T0 @X0 1 r2 ]
-"26
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 26: {
-[f ]
-"29
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 29:     } state = XB_WAIT_START;
-[v F17181 `E17175 ~T0 @X0 1 s state ]
-[i F17181
-. `E17175 0
-]
-"31
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 31:     static uint16_t xbeeLen = 0;
-[v F17182 `us ~T0 @X0 1 s xbeeLen ]
-[i F17182
--> -> 0 `i `us
-]
-"32
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 32:     static uint16_t bytesRead = 0;
-[v F17183 `us ~T0 @X0 1 s bytesRead ]
-[i F17183
--> -> 0 `i `us
-]
-"33
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 33:     static uint8_t checksum = 0;
-[v F17184 `uc ~T0 @X0 1 s checksum ]
-[i F17184
--> -> 0 `i `uc
-]
 "34
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 34:     static uint16_t payloadIndex = 0;
-[v F17185 `us ~T0 @X0 1 s payloadIndex ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 34: {
+[f ]
+"37
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 37:     } state = XB_WAIT_START;
+[v F17183 `E17177 ~T0 @X0 1 s state ]
+[i F17183
+. `E17177 0
+]
+"39
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 39:     static uint16_t xbeeLen = 0;
+[v F17184 `us ~T0 @X0 1 s xbeeLen ]
+[i F17184
+-> -> 0 `i `us
+]
+"40
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 40:     static uint16_t bytesRead = 0;
+[v F17185 `us ~T0 @X0 1 s bytesRead ]
 [i F17185
 -> -> 0 `i `us
 ]
-"35
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 35:     static _Bool discardFrame = 0;
-[v F17186 `a ~T0 @X0 1 s discardFrame ]
+"41
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 41:     static uint8_t checksum = 0;
+[v F17186 `uc ~T0 @X0 1 s checksum ]
 [i F17186
+-> -> 0 `i `uc
+]
+"42
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 42:     static uint16_t payloadIndex = 0;
+[v F17187 `us ~T0 @X0 1 s payloadIndex ]
+[i F17187
+-> -> 0 `i `us
+]
+"43
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 43:     static _Bool discardFrame = 0;
+[v F17188 `a ~T0 @X0 1 s discardFrame ]
+[i F17188
 -> -> 0 `i `a
 ]
-"38
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 38:     if (UART1_ErrorGet() != 0U)
-[e $ ! != ( _UART1_ErrorGet ..  -> 0 `ui 2404  ]
-"39
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 39:     {
-{
-"40
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 40:         U1ERRIRbits.FERIF = 0;
-[e = . . _U1ERRIRbits 0 3 -> -> 0 `i `uc ]
-"41
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 41:         U1ERRIRbits.RXFOIF = 0;
-[e = . . _U1ERRIRbits 0 1 -> -> 0 `i `uc ]
-"42
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 42:         U1ERRIRbits.PERIF = 0;
-[e = . . _U1ERRIRbits 0 6 -> -> 0 `i `uc ]
-"43
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 43:     }
-}
-[e :U 2404 ]
 "46
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 46:     while (UART1_IsRxReady())
-[e $U 2405  ]
-[e :U 2406 ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 46:     if (UART1_ErrorGet() != 0U)
+[e $ ! != ( _UART1_ErrorGet ..  -> 0 `ui 2408  ]
 "47
 [; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 47:     {
 {
 "48
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 48:         uint8_t byte = UART1_Read();
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 48:         U1ERRIRbits.FERIF = 0;
+[e = . . _U1ERRIRbits 0 3 -> -> 0 `i `uc ]
+"49
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 49:         U1ERRIRbits.RXFOIF = 0;
+[e = . . _U1ERRIRbits 0 1 -> -> 0 `i `uc ]
+"50
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 50:         U1ERRIRbits.PERIF = 0;
+[e = . . _U1ERRIRbits 0 6 -> -> 0 `i `uc ]
+"51
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 51:     }
+}
+[e :U 2408 ]
+"54
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 54:     while (UART1_IsRxReady())
+[e $U 2409  ]
+[e :U 2410 ]
+"55
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 55:     {
+{
+"56
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 56:         uint8_t byte = UART1_Read();
 [v _byte `uc ~T0 @X0 1 a ]
 [e = _byte ( _UART1_Read ..  ]
-"50
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 50:         switch (state)
-[e $U 2409  ]
-"51
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 51:         {
-{
-"52
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 52:             case XB_WAIT_START:
-[e :U 2410 ]
-"53
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 53:                 if (byte == 0x7E) {
-[e $ ! == -> _byte `i -> 126 `i 2411  ]
-{
-"54
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 54:                     state = XB_READ_LEN_MSB;
-[e = F17181 . `E17175 1 ]
-"55
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 55:                 }
-}
-[e :U 2411 ]
-"56
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 56:                 break;
-[e $U 2408  ]
 "58
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 58:             case XB_READ_LEN_MSB:
-[e :U 2412 ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 58:         switch (state)
+[e $U 2413  ]
 "59
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 59:                 xbeeLen = (uint16_t)(byte << 8);
-[e = F17182 -> << -> _byte `i -> 8 `i `us ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 59:         {
+{
 "60
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 60:                 state = XB_READ_LEN_LSB;
-[e = F17181 . `E17175 2 ]
-"61
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 61:                 break;
-[e $U 2408  ]
-"63
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 63:             case XB_READ_LEN_LSB:
-[e :U 2413 ]
-"64
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 64:                 xbeeLen |= byte;
-[e =| F17182 -> _byte `us ]
-"65
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 65:                 bytesRead = 0;
-[e = F17183 -> -> 0 `i `us ]
-"66
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 66:                 checksum = 0;
-[e = F17184 -> -> 0 `i `uc ]
-"67
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 67:                 payloadIndex = 0;
-[e = F17185 -> -> 0 `i `us ]
-"68
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 68:                 discardFrame = 0;
-[e = F17186 -> -> 0 `i `a ]
-"69
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 69:                 state = (xbeeLen > 0) ? XB_READ_DATA : XB_WAIT_START;
-[e = F17181 -> ? > -> F17182 `ui -> -> 0 `i `ui : . `E17175 3 . `E17175 0 `E17175 ]
-"70
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 70:                 break;
-[e $U 2408  ]
-"72
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 72:             case XB_READ_DATA:
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 60:             case XB_WAIT_START:
 [e :U 2414 ]
-"73
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 73:                 checksum += byte;
-[e =+ F17184 -> _byte `uc ]
-"76
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 76:                 if (bytesRead == 0) {
-[e $ ! == -> F17183 `ui -> -> 0 `i `ui 2415  ]
+"61
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 61:                 if (byte == 0x7E) {
+[e $ ! == -> _byte `i -> 126 `i 2415  ]
 {
-"77
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 77:                     if (byte != 0x90) {
-[e $ ! != -> _byte `i -> 144 `i 2416  ]
-{
-"78
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 78:                         discardFrame = 1;
-[e = F17186 -> -> 1 `i `a ]
-"79
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 79:                     }
-}
-[e :U 2416 ]
-"80
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 80:                 }
+"62
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 62:                     state = XB_READ_LEN_MSB;
+[e = F17183 . `E17177 1 ]
+"63
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 63:                 }
 }
 [e :U 2415 ]
-"82
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 82:                 if (!discardFrame) {
-[e $ ! ! != -> F17186 `i -> 0 `i 2417  ]
-{
+"64
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 64:                 break;
+[e $U 2412  ]
+"66
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 66:             case XB_READ_LEN_MSB:
+[e :U 2416 ]
+"67
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 67:                 xbeeLen = (uint16_t)(byte << 8);
+[e = F17184 -> << -> _byte `i -> 8 `i `us ]
+"68
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 68:                 state = XB_READ_LEN_LSB;
+[e = F17183 . `E17177 2 ]
+"69
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 69:                 break;
+[e $U 2412  ]
+"71
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 71:             case XB_READ_LEN_LSB:
+[e :U 2417 ]
+"72
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 72:                 xbeeLen |= byte;
+[e =| F17184 -> _byte `us ]
+"73
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 73:                 bytesRead = 0;
+[e = F17185 -> -> 0 `i `us ]
+"74
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 74:                 checksum = 0;
+[e = F17186 -> -> 0 `i `uc ]
+"75
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 75:                 payloadIndex = 0;
+[e = F17187 -> -> 0 `i `us ]
+"76
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 76:                 discardFrame = 0;
+[e = F17188 -> -> 0 `i `a ]
+"77
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 77:                 state = (xbeeLen > 0) ? XB_READ_DATA : XB_WAIT_START;
+[e = F17183 -> ? > -> F17184 `ui -> -> 0 `i `ui : . `E17177 3 . `E17177 0 `E17177 ]
+"78
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 78:                 break;
+[e $U 2412  ]
+"80
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 80:             case XB_READ_DATA:
+[e :U 2418 ]
+"81
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 81:                 checksum += byte;
+[e =+ F17186 -> _byte `uc ]
 "84
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 84:                     if (bytesRead >= 1 && bytesRead <= 8) {
-[e $ ! && >= -> F17183 `ui -> -> 1 `i `ui <= -> F17183 `ui -> -> 8 `i `ui 2418  ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 84:                 if (bytesRead == 0) {
+[e $ ! == -> F17185 `ui -> -> 0 `i `ui 2419  ]
 {
 "85
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 85:                         senderMAC[bytesRead - 1] = byte;
-[e = *U + &U _senderMAC * -> - -> F17183 `ui -> -> 1 `i `ui `ux -> -> # *U &U _senderMAC `ui `ux _byte ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 85:                     if (byte != 0x90) {
+[e $ ! != -> _byte `i -> 144 `i 2420  ]
+{
 "86
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 86:                     }
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 86:                         discardFrame = 1;
+[e = F17188 -> -> 1 `i `a ]
+"87
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 87:                     }
 }
-[e $U 2419  ]
-"88
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 88:                     else if (bytesRead >= 9 && bytesRead <= 10) {
-[e :U 2418 ]
-[e $ ! && >= -> F17183 `ui -> -> 9 `i `ui <= -> F17183 `ui -> -> 10 `i `ui 2420  ]
-{
-"89
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 89:                         sender16Bit[bytesRead - 9] = byte;
-[e = *U + &U _sender16Bit * -> - -> F17183 `ui -> -> 9 `i `ui `ux -> -> # *U &U _sender16Bit `ui `ux _byte ]
-"90
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 90:                     }
-}
-[e $U 2421  ]
-"94
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 94:                     else if (bytesRead >= 12) {
 [e :U 2420 ]
-[e $ ! >= -> F17183 `ui -> -> 12 `i `ui 2422  ]
-{
-"95
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 95:                         if (payloadIndex < MaxBufferLength) {
-[e $ ! < -> F17185 `ui -> _MaxBufferLength `ui 2423  ]
-{
-"96
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 96:                             destBuffer[payloadIndex++] = byte;
-[e = *U + _destBuffer * -> ++ F17185 -> -> 1 `i `us `ux -> -> # *U _destBuffer `ui `ux _byte ]
-"97
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 97:                         } else {
+"88
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 88:                 }
 }
-[e $U 2424  ]
-[e :U 2423 ]
-{
-"99
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 99:                             state = XB_WAIT_START;
-[e = F17181 . `E17175 0 ]
-"100
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 100:                             return COM_BUFFER_ERROR;
-[e ) . `E17149 3 ]
-[e $UE 2403  ]
-"101
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 101:                         }
-}
-[e :U 2424 ]
-"102
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 102:                     }
-}
-[e :U 2422 ]
-[e :U 2421 ]
 [e :U 2419 ]
-"103
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 103:                 }
+"90
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 90:                 if (!discardFrame) {
+[e $ ! ! != -> F17188 `i -> 0 `i 2421  ]
+{
+"92
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 92:                     if (bytesRead >= 1 && bytesRead <= 8) {
+[e $ ! && >= -> F17185 `ui -> -> 1 `i `ui <= -> F17185 `ui -> -> 8 `i `ui 2422  ]
+{
+"93
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 93:                         senderMAC[bytesRead - 1] = byte;
+[e = *U + &U _senderMAC * -> - -> F17185 `ui -> -> 1 `i `ui `ux -> -> # *U &U _senderMAC `ui `ux _byte ]
+"94
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 94:                     }
 }
-[e :U 2417 ]
+[e $U 2423  ]
+"96
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 96:                     else if (bytesRead >= 9 && bytesRead <= 10) {
+[e :U 2422 ]
+[e $ ! && >= -> F17185 `ui -> -> 9 `i `ui <= -> F17185 `ui -> -> 10 `i `ui 2424  ]
+{
+"97
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 97:                         sender16Bit[bytesRead - 9] = byte;
+[e = *U + &U _sender16Bit * -> - -> F17185 `ui -> -> 9 `i `ui `ux -> -> # *U &U _sender16Bit `ui `ux _byte ]
+"98
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 98:                     }
+}
+[e $U 2425  ]
+"102
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 102:                     else if (bytesRead >= 12) {
+[e :U 2424 ]
+[e $ ! >= -> F17185 `ui -> -> 12 `i `ui 2426  ]
+{
+"103
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 103:                         if (payloadIndex < MaxBufferLength) {
+[e $ ! < -> F17187 `ui -> _MaxBufferLength `ui 2427  ]
+{
+"104
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 104:                             destBuffer[payloadIndex++] = byte;
+[e = *U + _destBuffer * -> ++ F17187 -> -> 1 `i `us `ux -> -> # *U _destBuffer `ui `ux _byte ]
 "105
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 105:                 bytesRead++;
-[e ++ F17183 -> -> 1 `i `us ]
-"106
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 106:                 if (bytesRead >= xbeeLen) {
-[e $ ! >= -> F17183 `ui -> F17182 `ui 2425  ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 105:                         } else {
+}
+[e $U 2428  ]
+[e :U 2427 ]
 {
 "107
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 107:                     state = XB_VERIFY_CHK;
-[e = F17181 . `E17175 4 ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 107:                             state = XB_WAIT_START;
+[e = F17183 . `E17177 0 ]
 "108
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 108:                 }
-}
-[e :U 2425 ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 108:                             return COM_BUFFER_ERROR;
+[e ) . `E17149 3 ]
+[e $UE 2407  ]
 "109
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 109:                 break;
-[e $U 2408  ]
-"111
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 111:             case XB_VERIFY_CHK:
-[e :U 2426 ]
-"112
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 112:                 state = XB_WAIT_START;
-[e = F17181 . `E17175 0 ]
-"114
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 114:                 if (((checksum + byte) & 0xFF) == 0xFF) {
-[e $ ! == & + -> F17184 `i -> _byte `i -> 255 `i -> 255 `i 2427  ]
-{
-"115
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 115:                     if (discardFrame) {
-[e $ ! != -> F17186 `i -> 0 `i 2428  ]
-{
-"117
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 117:                         break;
-[e $U 2408  ]
-"118
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 118:                     }
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 109:                         }
 }
 [e :U 2428 ]
-"120
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 120:                     *receiveCount = payloadIndex;
-[e = *U _receiveCount F17185 ]
-"121
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 121:                     return COM_PASS;
-[e ) . `E17149 0 ]
-[e $UE 2403  ]
-"122
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 122:                 }
+"110
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 110:                     }
 }
-[e :U 2427 ]
-"123
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 123:                 if (discardFrame) {
-[e $ ! != -> F17186 `i -> 0 `i 2429  ]
+[e :U 2426 ]
+[e :U 2425 ]
+[e :U 2423 ]
+"111
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 111:                 }
+}
+[e :U 2421 ]
+"113
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 113:                 bytesRead++;
+[e ++ F17185 -> -> 1 `i `us ]
+"114
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 114:                 if (bytesRead >= xbeeLen) {
+[e $ ! >= -> F17185 `ui -> F17184 `ui 2429  ]
 {
-"124
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 124:                     break;
-[e $U 2408  ]
-"125
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 125:                 }
+"115
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 115:                     state = XB_VERIFY_CHK;
+[e = F17183 . `E17177 4 ]
+"116
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 116:                 }
 }
 [e :U 2429 ]
+"117
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 117:                 break;
+[e $U 2412  ]
+"119
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 119:             case XB_VERIFY_CHK:
+[e :U 2430 ]
+"120
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 120:                 state = XB_WAIT_START;
+[e = F17183 . `E17177 0 ]
+"122
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 122:                 if (((checksum + byte) & 0xFF) == 0xFF) {
+[e $ ! == & + -> F17186 `i -> _byte `i -> 255 `i -> 255 `i 2431  ]
+{
+"123
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 123:                     if (discardFrame) {
+[e $ ! != -> F17188 `i -> 0 `i 2432  ]
+{
+"125
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 125:                         break;
+[e $U 2412  ]
 "126
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 126:                 return COM_TRANSPORT_FAILURE;
-[e ) . `E17149 5 ]
-[e $UE 2403  ]
-"127
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 127:         }
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 126:                     }
 }
-[e $U 2408  ]
-[e :U 2409 ]
-[e [\ -> F17181 `ui , $ -> . `E17175 0 `ui 2410
- , $ -> . `E17175 1 `ui 2412
- , $ -> . `E17175 2 `ui 2413
- , $ -> . `E17175 3 `ui 2414
- , $ -> . `E17175 4 `ui 2426
- 2408 ]
-[e :U 2408 ]
+[e :U 2432 ]
 "128
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 128:     }
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 128:                     *receiveCount = payloadIndex;
+[e = *U _receiveCount F17187 ]
+"129
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 129:                     return COM_PASS;
+[e ) . `E17149 0 ]
+[e $UE 2407  ]
+"130
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 130:                 }
 }
-[e :U 2405 ]
-"46
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 46:     while (UART1_IsRxReady())
-[e $ != -> ( _UART1_IsRxReady ..  `i -> 0 `i 2406  ]
-[e :U 2407 ]
+[e :U 2431 ]
 "131
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 131:     return COM_BUSY;
-[e ) . `E17149 4 ]
-[e $UE 2403  ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 131:                 if (discardFrame) {
+[e $ ! != -> F17188 `i -> 0 `i 2433  ]
+{
 "132
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 132: }
-[e :UE 2403 ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 132:                     break;
+[e $U 2412  ]
+"133
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 133:                 }
 }
+[e :U 2433 ]
+"134
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 134:                 return COM_TRANSPORT_FAILURE;
+[e ) . `E17149 5 ]
+[e $UE 2407  ]
 "135
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 135: com_adapter_result_t COM_FrameSet(uint8_t *sourceBuffer, uint16_t sendCount)
-[v _COM_FrameSet `(E17149 ~T0 @X0 1 ef2`*uc`us ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 135:         }
+}
+[e $U 2412  ]
+[e :U 2413 ]
+[e [\ -> F17183 `ui , $ -> . `E17177 0 `ui 2414
+ , $ -> . `E17177 1 `ui 2416
+ , $ -> . `E17177 2 `ui 2417
+ , $ -> . `E17177 3 `ui 2418
+ , $ -> . `E17177 4 `ui 2430
+ 2412 ]
+[e :U 2412 ]
 "136
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 136: {
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 136:     }
+}
+[e :U 2409 ]
+"54
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 54:     while (UART1_IsRxReady())
+[e $ != -> ( _UART1_IsRxReady ..  `i -> 0 `i 2410  ]
+[e :U 2411 ]
+"139
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 139:     return COM_BUSY;
+[e ) . `E17149 4 ]
+[e $UE 2407  ]
+"140
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 140: }
+[e :UE 2407 ]
+}
+"143
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 143: com_adapter_result_t COM_FrameSet(uint8_t *sourceBuffer, uint16_t sendCount)
+[v _COM_FrameSet `(E17149 ~T0 @X0 1 ef2`*uc`us ]
+"144
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 144: {
 {
 [e :U _COM_FrameSet ]
-"135
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 135: com_adapter_result_t COM_FrameSet(uint8_t *sourceBuffer, uint16_t sendCount)
+"143
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 143: com_adapter_result_t COM_FrameSet(uint8_t *sourceBuffer, uint16_t sendCount)
 [v _sourceBuffer `*uc ~T0 @X0 1 r1 ]
 [v _sendCount `us ~T0 @X0 1 r2 ]
-"136
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 136: {
+"144
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 144: {
 [f ]
-"139
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 139:     uint16_t xbeeDataLen = 14 + sendCount;
+"147
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 147:     uint16_t xbeeDataLen = 14 + sendCount;
 [v _xbeeDataLen `us ~T0 @X0 1 a ]
 [e = _xbeeDataLen -> + -> -> 14 `i `ui -> _sendCount `ui `us ]
-"140
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 140:     uint8_t checksum = 0;
+"148
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 148:     uint8_t checksum = 0;
 [v _checksum `uc ~T0 @X0 1 a ]
 [e = _checksum -> -> 0 `i `uc ]
-"143
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 143:     UART1_Write(0x7E);
-[e ( _UART1_Write (1 -> -> 126 `i `uc ]
-"144
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 144:     UART1_Write((uint8_t)(xbeeDataLen >> 8));
-[e ( _UART1_Write (1 -> >> -> _xbeeDataLen `ui -> 8 `i `uc ]
-"145
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 145:     UART1_Write((uint8_t)(xbeeDataLen & 0xFF));
-[e ( _UART1_Write (1 -> & -> _xbeeDataLen `ui -> -> 255 `i `ui `uc ]
-"148
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 148:     checksum = SendAndCheck(0x10, checksum);
-[e = _checksum ( _SendAndCheck (2 , -> -> 16 `i `uc _checksum ]
-"149
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 149:     checksum = SendAndCheck(0x00, checksum);
-[e = _checksum ( _SendAndCheck (2 , -> -> 0 `i `uc _checksum ]
+"151
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 151:     UartWriteBlocking(0x7E);
+[e ( _UartWriteBlocking (1 -> -> 126 `i `uc ]
 "152
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 152:     for (uint8_t i = 0; i < 8; i++) {
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 152:     UartWriteBlocking((uint8_t)(xbeeDataLen >> 8));
+[e ( _UartWriteBlocking (1 -> >> -> _xbeeDataLen `ui -> 8 `i `uc ]
+"153
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 153:     UartWriteBlocking((uint8_t)(xbeeDataLen & 0xFF));
+[e ( _UartWriteBlocking (1 -> & -> _xbeeDataLen `ui -> -> 255 `i `ui `uc ]
+"156
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 156:     checksum = SendAndCheck(0x10, checksum);
+[e = _checksum ( _SendAndCheck (2 , -> -> 16 `i `uc _checksum ]
+"157
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 157:     checksum = SendAndCheck(0x00, checksum);
+[e = _checksum ( _SendAndCheck (2 , -> -> 0 `i `uc _checksum ]
+"160
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 160:     for (uint8_t i = 0; i < 8; i++) {
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 8 `i 2431  ]
-[e $U 2432  ]
-[e :U 2431 ]
+[e $ < -> _i `i -> 8 `i 2435  ]
+[e $U 2436  ]
+[e :U 2435 ]
 {
-"153
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 153:         checksum = SendAndCheck(senderMAC[i], checksum);
+"161
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 161:         checksum = SendAndCheck(senderMAC[i], checksum);
 [e = _checksum ( _SendAndCheck (2 , *U + &U _senderMAC * -> _i `ux -> -> # *U &U _senderMAC `ui `ux _checksum ]
-"154
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 154:     }
+"162
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 162:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 8 `i 2431  ]
-[e :U 2432 ]
+[e $ < -> _i `i -> 8 `i 2435  ]
+[e :U 2436 ]
 }
-"157
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 157:     checksum = SendAndCheck(sender16Bit[0], checksum);
-[e = _checksum ( _SendAndCheck (2 , *U + &U _sender16Bit * -> -> -> 0 `i `ui `ux -> -> # *U &U _sender16Bit `ui `ux _checksum ]
-"158
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 158:     checksum = SendAndCheck(sender16Bit[1], checksum);
-[e = _checksum ( _SendAndCheck (2 , *U + &U _sender16Bit * -> -> -> 1 `i `ui `ux -> -> # *U &U _sender16Bit `ui `ux _checksum ]
-"161
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 161:     checksum = SendAndCheck(0x00, checksum);
-[e = _checksum ( _SendAndCheck (2 , -> -> 0 `i `uc _checksum ]
-"162
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 162:     checksum = SendAndCheck(0x00, checksum);
-[e = _checksum ( _SendAndCheck (2 , -> -> 0 `i `uc _checksum ]
 "165
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 165:     for (uint16_t i = 0; i < sendCount; i++) {
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 165:     checksum = SendAndCheck(sender16Bit[0], checksum);
+[e = _checksum ( _SendAndCheck (2 , *U + &U _sender16Bit * -> -> -> 0 `i `ui `ux -> -> # *U &U _sender16Bit `ui `ux _checksum ]
+"166
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 166:     checksum = SendAndCheck(sender16Bit[1], checksum);
+[e = _checksum ( _SendAndCheck (2 , *U + &U _sender16Bit * -> -> -> 1 `i `ui `ux -> -> # *U &U _sender16Bit `ui `ux _checksum ]
+"169
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 169:     checksum = SendAndCheck(0x00, checksum);
+[e = _checksum ( _SendAndCheck (2 , -> -> 0 `i `uc _checksum ]
+"170
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 170:     checksum = SendAndCheck(0x00, checksum);
+[e = _checksum ( _SendAndCheck (2 , -> -> 0 `i `uc _checksum ]
+"173
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 173:     for (uint16_t i = 0; i < sendCount; i++) {
 {
 [v _i `us ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `us ]
-[e $U 2437  ]
-[e :U 2434 ]
+[e $U 2441  ]
+[e :U 2438 ]
 {
-"166
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 166:         checksum = SendAndCheck(sourceBuffer[i], checksum);
+"174
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 174:         checksum = SendAndCheck(sourceBuffer[i], checksum);
 [e = _checksum ( _SendAndCheck (2 , *U + _sourceBuffer * -> _i `ux -> -> # *U _sourceBuffer `ui `ux _checksum ]
-"167
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 167:     }
+"175
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 175:     }
 }
 [e ++ _i -> -> 1 `i `us ]
-[e :U 2437 ]
-[e $ < -> _i `ui -> _sendCount `ui 2434  ]
-[e :U 2435 ]
+[e :U 2441 ]
+[e $ < -> _i `ui -> _sendCount `ui 2438  ]
+[e :U 2439 ]
 }
-"170
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 170:     UART1_Write((uint8_t)(0xFF - checksum));
-[e ( _UART1_Write (1 -> - -> 255 `i -> _checksum `i `uc ]
-"172
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 172:     return COM_PASS;
+"178
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 178:     UartWriteBlocking((uint8_t)(0xFF - checksum));
+[e ( _UartWriteBlocking (1 -> - -> 255 `i -> _checksum `i `uc ]
+"180
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 180:     return COM_PASS;
 [e ) . `E17149 0 ]
-[e $UE 2430  ]
-"173
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 173: }
-[e :UE 2430 ]
+[e $UE 2434  ]
+"181
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 181: }
+[e :UE 2434 ]
 }
-"175
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 175: com_adapter_result_t COM_Initialize(uint16_t maximumBufferLength)
+"183
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 183: com_adapter_result_t COM_Initialize(uint16_t maximumBufferLength)
 [v _COM_Initialize `(E17149 ~T0 @X0 1 ef1`us ]
-"176
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 176: {
+"184
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 184: {
 {
 [e :U _COM_Initialize ]
-"175
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 175: com_adapter_result_t COM_Initialize(uint16_t maximumBufferLength)
+"183
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 183: com_adapter_result_t COM_Initialize(uint16_t maximumBufferLength)
 [v _maximumBufferLength `us ~T0 @X0 1 r1 ]
-"176
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 176: {
+"184
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 184: {
 [f ]
-"177
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 177:     com_adapter_result_t result = COM_FAIL;
+"185
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 185:     com_adapter_result_t result = COM_FAIL;
 [v _result `E17149 ~T0 @X0 1 a ]
 [e = _result . `E17149 1 ]
-"178
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 178:     if (maximumBufferLength != 0U)
-[e $ ! != -> _maximumBufferLength `ui -> 0 `ui 2439  ]
-"179
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 179:     {
-{
-"180
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 180:         MaxBufferLength = maximumBufferLength;
-[e = _MaxBufferLength _maximumBufferLength ]
-"181
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 181:         UART1_Initialize();
-[e ( _UART1_Initialize ..  ]
-"182
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 182:         result = COM_PASS;
-[e = _result . `E17149 0 ]
-"183
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 183:     }
-}
-[e $U 2440  ]
-"184
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 184:     else
-[e :U 2439 ]
-"185
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 185:     {
-{
 "186
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 186:         result = COM_INVALID_ARG;
-[e = _result . `E17149 2 ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 186:     if (maximumBufferLength != 0U)
+[e $ ! != -> _maximumBufferLength `ui -> 0 `ui 2443  ]
 "187
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 187:     }
-}
-[e :U 2440 ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 187:     {
+{
+"188
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 188:         MaxBufferLength = maximumBufferLength;
+[e = _MaxBufferLength _maximumBufferLength ]
 "189
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 189:     return result;
-[e ) _result ]
-[e $UE 2438  ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 189:         UART1_Initialize();
+[e ( _UART1_Initialize ..  ]
 "190
-[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 190: }
-[e :UE 2438 ]
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 190:         result = COM_PASS;
+[e = _result . `E17149 0 ]
+"191
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 191:     }
+}
+[e $U 2444  ]
+"192
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 192:     else
+[e :U 2443 ]
+"193
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 193:     {
+{
+"194
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 194:         result = COM_INVALID_ARG;
+[e = _result . `E17149 2 ]
+"195
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 195:     }
+}
+[e :U 2444 ]
+"197
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 197:     return result;
+[e ) _result ]
+[e $UE 2442  ]
+"198
+[; ;mcc_generated_files/bootloader/library/com_adapter/com_adapter.c: 198: }
+[e :UE 2442 ]
 }

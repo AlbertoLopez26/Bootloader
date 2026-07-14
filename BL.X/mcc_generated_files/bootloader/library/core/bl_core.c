@@ -127,16 +127,24 @@ bl_result_t BL_BootCommandProcess(uint8_t * bootDataPtr, uint16_t bufferLength)
             // This mathematical corelation is consistent as long as the execution image is located at the lower addresses and all image spaces are the same size.
             flash_address_t stagingAreaOffset = (flash_address_t) ((uint32_t)BL_STAGING_IMAGE_START - (uint32_t)BL_APPLICATION_START_ADDRESS);
 
-            if ((FLASH_PageOffsetGet((flash_address_t) (commandHeader.startAddress + stagingAreaOffset)) == (flash_address_t) 0)
-                    /* cppcheck-suppress misra-c2012-7.2; This rule cannot be followed due to assembly syntax requirements. */
-                            && (((flash_address_t) (commandHeader.startAddress + stagingAreaOffset)) >= (flash_address_t) BL_STAGING_IMAGE_START))
+            uint16_t writeLength = 0U;
+            if (bufferLength > (BL_COMMAND_HEADER_SIZE + BL_BLOCK_HEADER_SIZE))
+            {
+                writeLength = (uint16_t)(bufferLength - (BL_COMMAND_HEADER_SIZE + BL_BLOCK_HEADER_SIZE));
+            }
+
+            flash_address_t targetAddress = (flash_address_t) commandHeader.startAddress + stagingAreaOffset;
+            if ((targetAddress >= (flash_address_t) BL_STAGING_IMAGE_START)
+                    && (writeLength > 0U)
+                    && (writeLength <= (uint16_t) PROGMEM_PAGE_SIZE)
+                    && ((FLASH_PageOffsetGet(targetAddress) + writeLength) <= (uint16_t) PROGMEM_PAGE_SIZE))
             {
                 // Call the abstracted write function
                 bl_mem_result_t memoryStatus = BL_FlashWrite(
-                                                             (flash_address_t) commandHeader.startAddress + stagingAreaOffset,
+                                                             targetAddress,
                                                              /* cppcheck-suppress misra-c2023-11.3 */
                                                              (flash_data_t *) &(bootDataPtr[BL_COMMAND_HEADER_SIZE + BL_BLOCK_HEADER_SIZE]),
-                                                             PROGMEM_PAGE_SIZE
+                                                             writeLength
                                                              );
                 if (memoryStatus == (bl_mem_result_t)BL_MEM_PASS)
                 {

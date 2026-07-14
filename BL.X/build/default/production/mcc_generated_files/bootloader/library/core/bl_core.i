@@ -29597,16 +29597,24 @@ bl_result_t BL_BootCommandProcess(uint8_t * bootDataPtr, uint16_t bufferLength)
 
             flash_address_t stagingAreaOffset = (flash_address_t) ((uint32_t)(0x3000) - (uint32_t)(0x3000));
 
-            if ((FLASH_PageOffsetGet((flash_address_t) (commandHeader.startAddress + stagingAreaOffset)) == (flash_address_t) 0)
+            uint16_t writeLength = 0U;
+            if (bufferLength > (((uint16_t)sizeof (bl_command_header_t)) + ((uint16_t)sizeof (bl_block_header_t))))
+            {
+                writeLength = (uint16_t)(bufferLength - (((uint16_t)sizeof (bl_command_header_t)) + ((uint16_t)sizeof (bl_block_header_t))));
+            }
 
-                            && (((flash_address_t) (commandHeader.startAddress + stagingAreaOffset)) >= (flash_address_t) (0x3000)))
+            flash_address_t targetAddress = (flash_address_t) commandHeader.startAddress + stagingAreaOffset;
+            if ((targetAddress >= (flash_address_t) (0x3000))
+                    && (writeLength > 0U)
+                    && (writeLength <= (uint16_t) (256U))
+                    && ((FLASH_PageOffsetGet(targetAddress) + writeLength) <= (uint16_t) (256U)))
             {
 
                 bl_mem_result_t memoryStatus = BL_FlashWrite(
-                                                             (flash_address_t) commandHeader.startAddress + stagingAreaOffset,
+                                                             targetAddress,
 
                                                              (flash_data_t *) &(bootDataPtr[((uint16_t)sizeof (bl_command_header_t)) + ((uint16_t)sizeof (bl_block_header_t))]),
-                                                             (256U)
+                                                             writeLength
                                                              );
                 if (memoryStatus == (bl_mem_result_t)BL_MEM_PASS)
                 {
@@ -29627,7 +29635,7 @@ bl_result_t BL_BootCommandProcess(uint8_t * bootDataPtr, uint16_t bufferLength)
 
         }
         break;
-# 190 "mcc_generated_files/bootloader/library/core/bl_core.c"
+# 198 "mcc_generated_files/bootloader/library/core/bl_core.c"
     default:
         bootCommandStatus = BL_ERROR_UNKNOWN_COMMAND;
         break;
@@ -29647,7 +29655,7 @@ void BL_ApplicationStart(void)
     STKPTR = 0x00U;
     BSR = 0x00U;
     __asm("goto " "(0x3000)");
-# 217 "mcc_generated_files/bootloader/library/core/bl_core.c"
+# 225 "mcc_generated_files/bootloader/library/core/bl_core.c"
 }
 
 bl_result_t BL_Initialize(void)
@@ -29666,12 +29674,12 @@ static bl_result_t BootloaderProcessorUnlock(uint8_t * bufferPtr)
 
     bl_unlock_boot_metadata_t metadataPacket;
     (void) memcpy((void *) &metadataPacket, (void *) bufferPtr,(size_t)(sizeof (bl_unlock_boot_metadata_t)));
-# 247 "mcc_generated_files/bootloader/library/core/bl_core.c"
+# 255 "mcc_generated_files/bootloader/library/core/bl_core.c"
     if((metadataPacket.imageVersionMajor) != (uint8_t) (0x00))
     {
         commandStatus = BL_ERROR_VERIFICATION_FAIL;
     }
-# 261 "mcc_generated_files/bootloader/library/core/bl_core.c"
+# 269 "mcc_generated_files/bootloader/library/core/bl_core.c"
     else if(metadataPacket.imageVersionMinor > (uint8_t) (0x03))
     {
         commandStatus = BL_ERROR_VERIFICATION_FAIL;
@@ -29707,7 +29715,7 @@ static bl_result_t BootloaderProcessorUnlock(uint8_t * bufferPtr)
     {
         commandStatus = BL_ERROR_VERIFICATION_FAIL;
     }
-# 316 "mcc_generated_files/bootloader/library/core/bl_core.c"
+# 324 "mcc_generated_files/bootloader/library/core/bl_core.c"
     if (metadataPacket.commandHeader.pageEraseUnlockKey != (uint16_t) (0xAA55U))
     {
         commandStatus = BL_ERROR_VERIFICATION_FAIL;
@@ -29724,7 +29732,7 @@ static bl_result_t BootloaderProcessorUnlock(uint8_t * bufferPtr)
     {
         commandStatus = BL_ERROR_VERIFICATION_FAIL;
     }
-# 351 "mcc_generated_files/bootloader/library/core/bl_core.c"
+# 359 "mcc_generated_files/bootloader/library/core/bl_core.c"
     if (commandStatus != (bl_result_t)BL_ERROR_VERIFICATION_FAIL)
     {
         bootloaderCoreUnlocked = 1;

@@ -1,0 +1,397 @@
+[p GLOBOPT AUTOSTATIC IEEE_FLT IEEE_DBL LFSROK ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 18F47Q43 ]
+[d frameptr 1249 ]
+"123 C:\Users\ernes\OneDrive\Documentos\GitHub\Bootloader\APP_TEST.X\main.c
+[e E16968 . `uc
+XB_WAIT_START 0
+XB_READ_LEN_MSB 1
+XB_READ_LEN_LSB 2
+XB_READ_DATA 3
+XB_VERIFY_CHK 4
+]
+"7 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\__lldiv.c
+[v ___lldiv __lldiv `(ul  1 e 4 0 ]
+"7 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\aldiv.c
+[v ___aldiv __aldiv `(l  1 e 4 0 ]
+"7 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\almod.c
+[v ___almod __almod `(l  1 e 4 0 ]
+"9 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\aodiv.c
+[v ___aodiv __aodiv `(o  1 e 8 0 ]
+"9 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\aomod.c
+[v ___aomod __aomod `(o  1 e 8 0 ]
+"7 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\atdiv.c
+[v ___atdiv __atdiv `(m  1 e 3 0 ]
+"7 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\atmod.c
+[v ___atmod __atmod `(m  1 e 3 0 ]
+"7 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+"7 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+"4 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\fleq.c
+[v ___fleq __fleq `(b  1 e 0 0 ]
+"62 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\float.c
+[v ___ftpack __ftpack `(f  1 e 4 0 ]
+"86 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 4 0 ]
+"54 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 4 0 ]
+"62 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 4 0 ]
+"19 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\ftsub.c
+[v ___ftsub __ftsub `(f  1 e 4 0 ]
+"7 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\llmod.c
+[v ___llmod __llmod `(ul  1 e 4 0 ]
+"9 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\lodiv.c
+[v ___lodiv __lodiv `(uo  1 e 8 0 ]
+"9 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\lomod.c
+[v ___lomod __lomod `(uo  1 e 8 0 ]
+"7 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\ltdiv.c
+[v ___ltdiv __ltdiv `(um  1 e 3 0 ]
+"7 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\ltmod.c
+[v ___ltmod __ltmod `(um  1 e 3 0 ]
+"7 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\lwdiv.c
+[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
+"7 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\lwmod.c
+[v ___lwmod __lwmod `(ui  1 e 2 0 ]
+"10 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"245
+[v ___flsub __flsub `(d  1 e 4 0 ]
+"11 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\sprcdiv.c
+[v ___fldiv __fldiv `(d  1 e 4 0 ]
+"8 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\sprcmul.c
+[v ___flmul __flmul `(d  1 e 4 0 ]
+"15 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+"15 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\Umul24.c
+[v ___tmul __tmul `(um  1 e 3 0 ]
+"15 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\Umul32.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+"91 C:\Program Files\Microchip\xc8\v3.10\pic\sources\c99\common\Umul64.c
+[v ___omul __omul `(uo  1 e 8 0 ]
+"25 C:\Users\ernes\OneDrive\Documentos\GitHub\Bootloader\APP_TEST.X\main.c
+[v _ClockInitialize ClockInitialize `(v  1 s 1 ClockInitialize ]
+"35
+[v _PinsInitialize PinsInitialize `(v  1 s 1 PinsInitialize ]
+"83
+[v _UartInitialize UartInitialize `(v  1 s 1 UartInitialize ]
+"104
+[v _XBeePayloadIsBootCommand XBeePayloadIsBootCommand `(a  1 s 1 XBeePayloadIsBootCommand ]
+"113
+[v _XBeeCommandTask XBeeCommandTask `(v  1 s 1 XBeeCommandTask ]
+"207
+[v _DelayMsWithCommand DelayMsWithCommand `(v  1 s 1 DelayMsWithCommand ]
+"216
+[v _EepromWriteByte EepromWriteByte `(v  1 s 1 EepromWriteByte ]
+"245
+[v _RequestBootloader RequestBootloader `(v  1 s 1 RequestBootloader ]
+"255
+[v _main main `(v  1 e 1 0 ]
+[s S242 . 1 `uc 1 GO 1 0 :1:0 
+]
+"475 C:\Program Files\Microchip\MPLABX\v6.30\packs\Microchip\PIC18F-Q_DFP\1.28.451\xc8\pic\include\proc/pic18f47q43.h
+[s S244 . 1 `uc 1 NOT_DONE 1 0 :1:0 
+]
+[s S246 . 1 `uc 1 nDONE 1 0 :1:0 
+]
+[s S248 . 1 `uc 1 NVMGO 1 0 :1:0 
+]
+[u S250 . 1 `S242 1 . 1 0 `S244 1 . 1 0 `S246 1 . 1 0 `S248 1 . 1 0 ]
+[v _NVMCON0bits NVMCON0bits `VES250  1 e 1 @64 ]
+[s S225 . 1 `uc 1 CMD 1 0 :3:0 
+`uc 1 . 1 0 :4:3 
+`uc 1 WRERR 1 0 :1:7 
+]
+"515
+[s S229 . 1 `uc 1 NVMCMD 1 0 :3:0 
+]
+[u S231 . 1 `S225 1 . 1 0 `S229 1 . 1 0 ]
+[v _NVMCON1bits NVMCON1bits `VES231  1 e 1 @65 ]
+"535
+[v _NVMLOCK NVMLOCK `VEuc  1 e 1 @66 ]
+"564
+[v _NVMADRL NVMADRL `VEuc  1 e 1 @67 ]
+"634
+[v _NVMADRH NVMADRH `VEuc  1 e 1 @68 ]
+"704
+[v _NVMADRU NVMADRU `VEuc  1 e 1 @69 ]
+"769
+[v _NVMDATL NVMDATL `VEuc  1 e 1 @70 ]
+"5082
+[v _ACTCON ACTCON `VEuc  1 e 1 @172 ]
+"5152
+[v _OSCCON1 OSCCON1 `VEuc  1 e 1 @173 ]
+"5292
+[v _OSCCON3 OSCCON3 `VEuc  1 e 1 @175 ]
+"5332
+[v _OSCTUNE OSCTUNE `VEuc  1 e 1 @176 ]
+"5390
+[v _OSCFRQ OSCFRQ `VEuc  1 e 1 @177 ]
+"5592
+[v _OSCEN OSCEN `VEuc  1 e 1 @179 ]
+"9818
+[v _RC6PPS RC6PPS `VEuc  1 e 1 @535 ]
+"14272
+[v _U1RXPPS U1RXPPS `VEuc  1 e 1 @626 ]
+"16541
+[v _U1RXB U1RXB `VEuc  1 e 1 @673 ]
+"16579
+[v _U1RXCHK U1RXCHK `VEuc  1 e 1 @674 ]
+"16637
+[v _U1TXCHK U1TXCHK `VEuc  1 e 1 @676 ]
+"16664
+[v _U1P1L U1P1L `VEuc  1 e 1 @677 ]
+"16684
+[v _U1P1H U1P1H `VEuc  1 e 1 @678 ]
+"16711
+[v _U1P2L U1P2L `VEuc  1 e 1 @679 ]
+"16731
+[v _U1P2H U1P2H `VEuc  1 e 1 @680 ]
+"16758
+[v _U1P3L U1P3L `VEuc  1 e 1 @681 ]
+"16778
+[v _U1P3H U1P3H `VEuc  1 e 1 @682 ]
+"16798
+[v _U1CON0 U1CON0 `VEuc  1 e 1 @683 ]
+"16926
+[v _U1CON1 U1CON1 `VEuc  1 e 1 @684 ]
+"17006
+[v _U1CON2 U1CON2 `VEuc  1 e 1 @685 ]
+"17155
+[v _U1BRGL U1BRGL `VEuc  1 e 1 @686 ]
+"17175
+[v _U1BRGH U1BRGH `VEuc  1 e 1 @687 ]
+"17195
+[v _U1FIFO U1FIFO `VEuc  1 e 1 @688 ]
+[s S135 . 1 `uc 1 RXBF 1 0 :1:0 
+`uc 1 RXBE 1 0 :1:1 
+`uc 1 XON 1 0 :1:2 
+`uc 1 RXIDL 1 0 :1:3 
+`uc 1 TXBF 1 0 :1:4 
+`uc 1 TXBE 1 0 :1:5 
+`uc 1 STPMD 1 0 :1:6 
+`uc 1 TXWRE 1 0 :1:7 
+]
+"17230
+[s S144 . 1 `uc 1 U1RXBF 1 0 :1:0 
+`uc 1 U1RXBE 1 0 :1:1 
+`uc 1 U1XON 1 0 :1:2 
+`uc 1 U1RXIDL 1 0 :1:3 
+`uc 1 U1TXBF 1 0 :1:4 
+`uc 1 U1TXBE 1 0 :1:5 
+`uc 1 U1STPMD 1 0 :1:6 
+`uc 1 U1TXWRE 1 0 :1:7 
+]
+[s S153 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 U1RCIDL 1 0 :1:3 
+]
+[s S156 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 RCIDL 1 0 :1:3 
+]
+[u S159 . 1 `S135 1 . 1 0 `S144 1 . 1 0 `S153 1 . 1 0 `S156 1 . 1 0 ]
+[v _U1FIFObits U1FIFObits `VES159  1 e 1 @688 ]
+"17325
+[v _U1UIR U1UIR `VEuc  1 e 1 @689 ]
+"17381
+[v _U1ERRIR U1ERRIR `VEuc  1 e 1 @690 ]
+[s S90 . 1 `uc 1 TXCIF 1 0 :1:0 
+`uc 1 RXFOIF 1 0 :1:1 
+`uc 1 RXBKIF 1 0 :1:2 
+`uc 1 FERIF 1 0 :1:3 
+`uc 1 CERIF 1 0 :1:4 
+`uc 1 ABDOVF 1 0 :1:5 
+`uc 1 PERIF 1 0 :1:6 
+`uc 1 TXMTIF 1 0 :1:7 
+]
+"17408
+[s S99 . 1 `uc 1 U1TXCIF 1 0 :1:0 
+`uc 1 U1RXFOIF 1 0 :1:1 
+`uc 1 U1RXBKIF 1 0 :1:2 
+`uc 1 U1FERIF 1 0 :1:3 
+`uc 1 U1CERIF 1 0 :1:4 
+`uc 1 U1ABDOVF 1 0 :1:5 
+`uc 1 U1PERIF 1 0 :1:6 
+`uc 1 U1TXMTIF 1 0 :1:7 
+]
+[u S108 . 1 `S90 1 . 1 0 `S99 1 . 1 0 ]
+[v _U1ERRIRbits U1ERRIRbits `VES108  1 e 1 @690 ]
+"17493
+[v _U1ERRIE U1ERRIE `VEuc  1 e 1 @691 ]
+"39509
+[v _ANSELA ANSELA `VEuc  1 e 1 @1024 ]
+"39571
+[v _WPUA WPUA `VEuc  1 e 1 @1025 ]
+"39633
+[v _ODCONA ODCONA `VEuc  1 e 1 @1026 ]
+"39695
+[v _SLRCONA SLRCONA `VEuc  1 e 1 @1027 ]
+"39757
+[v _INLVLA INLVLA `VEuc  1 e 1 @1028 ]
+"40005
+[v _ANSELB ANSELB `VEuc  1 e 1 @1032 ]
+"40067
+[v _WPUB WPUB `VEuc  1 e 1 @1033 ]
+"40129
+[v _ODCONB ODCONB `VEuc  1 e 1 @1034 ]
+"40191
+[v _SLRCONB SLRCONB `VEuc  1 e 1 @1035 ]
+"40253
+[v _INLVLB INLVLB `VEuc  1 e 1 @1036 ]
+"40501
+[v _ANSELC ANSELC `VEuc  1 e 1 @1040 ]
+"40563
+[v _WPUC WPUC `VEuc  1 e 1 @1041 ]
+"40625
+[v _ODCONC ODCONC `VEuc  1 e 1 @1042 ]
+"40687
+[v _SLRCONC SLRCONC `VEuc  1 e 1 @1043 ]
+"40749
+[v _INLVLC INLVLC `VEuc  1 e 1 @1044 ]
+"40997
+[v _ANSELD ANSELD `VEuc  1 e 1 @1048 ]
+"41059
+[v _WPUD WPUD `VEuc  1 e 1 @1049 ]
+"41121
+[v _ODCOND ODCOND `VEuc  1 e 1 @1050 ]
+"41183
+[v _SLRCOND SLRCOND `VEuc  1 e 1 @1051 ]
+"41245
+[v _INLVLD INLVLD `VEuc  1 e 1 @1052 ]
+"41307
+[v _ANSELE ANSELE `VEuc  1 e 1 @1056 ]
+"41339
+[v _WPUE WPUE `VEuc  1 e 1 @1057 ]
+"41377
+[v _ODCONE ODCONE `VEuc  1 e 1 @1058 ]
+"41409
+[v _SLRCONE SLRCONE `VEuc  1 e 1 @1059 ]
+"41441
+[v _INLVLE INLVLE `VEuc  1 e 1 @1060 ]
+"48045
+[v _LATA LATA `VEuc  1 e 1 @1214 ]
+"48107
+[v _LATB LATB `VEuc  1 e 1 @1215 ]
+"48169
+[v _LATC LATC `VEuc  1 e 1 @1216 ]
+"48231
+[v _LATD LATD `VEuc  1 e 1 @1217 ]
+[s S264 . 1 `uc 1 LATD0 1 0 :1:0 
+`uc 1 LATD1 1 0 :1:1 
+`uc 1 LATD2 1 0 :1:2 
+`uc 1 LATD3 1 0 :1:3 
+`uc 1 LATD4 1 0 :1:4 
+`uc 1 LATD5 1 0 :1:5 
+`uc 1 LATD6 1 0 :1:6 
+`uc 1 LATD7 1 0 :1:7 
+]
+"48248
+[u S273 . 1 `S264 1 . 1 0 ]
+"48248
+"48248
+[v _LATDbits LATDbits `VES273  1 e 1 @1217 ]
+"48293
+[v _LATE LATE `VEuc  1 e 1 @1218 ]
+"48325
+[v _TRISA TRISA `VEuc  1 e 1 @1222 ]
+"48387
+[v _TRISB TRISB `VEuc  1 e 1 @1223 ]
+"48449
+[v _TRISC TRISC `VEuc  1 e 1 @1224 ]
+"48511
+[v _TRISD TRISD `VEuc  1 e 1 @1225 ]
+"48573
+[v _TRISE TRISE `VEuc  1 e 1 @1226 ]
+[s S195 . 1 `uc 1 INT0EDG 1 0 :1:0 
+`uc 1 INT1EDG 1 0 :1:1 
+`uc 1 INT2EDG 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 IPEN 1 0 :1:5 
+`uc 1 GIEL 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+"48911
+[s S203 . 1 `uc 1 . 1 0 :7:0 
+`uc 1 GIEH 1 0 :1:7 
+]
+"48911
+[u S206 . 1 `S195 1 . 1 0 `S203 1 . 1 0 ]
+"48911
+"48911
+[v _INTCON0bits INTCON0bits `VES206  1 e 1 @1238 ]
+"22 C:\Users\ernes\OneDrive\Documentos\GitHub\Bootloader\APP_TEST.X\main.c
+[v _unlockKeyHigh unlockKeyHigh `uc  1 s 1 unlockKeyHigh ]
+"23
+[v _unlockKeyLow unlockKeyLow `uc  1 s 1 unlockKeyLow ]
+"255
+[v _main main `(v  1 e 1 0 ]
+{
+"268
+} 0
+"83
+[v _UartInitialize UartInitialize `(v  1 s 1 UartInitialize ]
+{
+"102
+} 0
+"35
+[v _PinsInitialize PinsInitialize `(v  1 s 1 PinsInitialize ]
+{
+"81
+} 0
+"207
+[v _DelayMsWithCommand DelayMsWithCommand `(v  1 s 1 DelayMsWithCommand ]
+{
+[v DelayMsWithCommand@delayMs delayMs `us  1 p 2 7 ]
+"214
+} 0
+"113
+[v _XBeeCommandTask XBeeCommandTask `(v  1 s 1 XBeeCommandTask ]
+{
+"142
+[v XBeeCommandTask@byte byte `uc  1 a 1 6 ]
+"123
+[v XBeeCommandTask@state state `uc  1 s 1 state ]
+"124
+[v XBeeCommandTask@xbeeLen xbeeLen `us  1 s 2 xbeeLen ]
+"125
+[v XBeeCommandTask@bytesRead bytesRead `us  1 s 2 bytesRead ]
+"126
+[v XBeeCommandTask@checksum checksum `uc  1 s 1 checksum ]
+"127
+[v XBeeCommandTask@payload payload `[8]uc  1 s 8 payload ]
+"128
+[v XBeeCommandTask@payloadIndex payloadIndex `uc  1 s 1 payloadIndex ]
+"129
+[v XBeeCommandTask@payloadLength payloadLength `uc  1 s 1 payloadLength ]
+"130
+[v XBeeCommandTask@discardFrame discardFrame `a  1 s 1 discardFrame ]
+"205
+} 0
+"104
+[v _XBeePayloadIsBootCommand XBeePayloadIsBootCommand `(a  1 s 1 XBeePayloadIsBootCommand ]
+{
+[v XBeePayloadIsBootCommand@payload payload `*.39Cuc  1 p 2 0 ]
+[v XBeePayloadIsBootCommand@payloadLength payloadLength `uc  1 p 1 2 ]
+"111
+} 0
+"245
+[v _RequestBootloader RequestBootloader `(v  1 s 1 RequestBootloader ]
+{
+"253
+} 0
+"216
+[v _EepromWriteByte EepromWriteByte `(v  1 s 1 EepromWriteByte ]
+{
+"218
+[v EepromWriteByte@gieState gieState `uc  1 a 1 5 ]
+"216
+[v EepromWriteByte@address address `ul  1 p 4 0 ]
+[v EepromWriteByte@data data `uc  1 p 1 4 ]
+"243
+} 0
+"25
+[v _ClockInitialize ClockInitialize `(v  1 s 1 ClockInitialize ]
+{
+"33
+} 0

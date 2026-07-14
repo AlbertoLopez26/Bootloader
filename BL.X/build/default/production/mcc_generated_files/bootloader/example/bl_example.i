@@ -29251,10 +29251,7 @@ extern volatile __persistent __near __bit bootloaderIsRunning;
 # 35 "mcc_generated_files/bootloader/example/bl_example.c" 2
 
 
-# 1 "mcc_generated_files/bootloader/example/../library/core/bl_boot_verify.h" 1
-# 59 "mcc_generated_files/bootloader/example/../library/core/bl_boot_verify.h"
-bl_result_t CRC32_BOOT_Validate(flash_address_t startAddress, uint32_t length, flash_address_t refAddress);
-# 38 "mcc_generated_files/bootloader/example/bl_example.c" 2
+
 
 # 1 "mcc_generated_files/bootloader/example/bl_example.h" 1
 # 38 "mcc_generated_files/bootloader/example/bl_example.h"
@@ -29278,7 +29275,7 @@ void BL_Example(void);
 typedef enum
 {
 
-    BOOTSCAN,
+
 
     BOOTLOADER,
     APPLICATION,
@@ -29303,20 +29300,7 @@ void BL_Example(void)
         bootloaderIsRunning = 0;
         BL_ApplicationStart();
         break;
-
-    case BOOTSCAN:
-        result = CRC32_BOOT_Validate((flash_address_t)0x0000,(uint32_t)((0x3000) -(2U)),(flash_address_t)((0x3000) - (2U)));
-
-        if (BL_PASS == result)
-        {
-            BootState = BOOTLOADER;
-        }
-        else
-        {
-            BootState = ERROR_STATE;
-        }
-        break;
-
+# 113 "mcc_generated_files/bootloader/example/bl_example.c"
     case BOOTLOADER:
         do { LATDbits.LATD1 = 0; } while(0);
         result = FTP_Task();
@@ -29345,8 +29329,15 @@ bl_example_result_t BL_ExampleInitialize(void)
 
 
 
-        BootState = BOOTSCAN;
-# 150 "mcc_generated_files/bootloader/example/bl_example.c"
+
+
+        BootState = BOOTLOADER;
+
+
+
+
+
+
         _Bool isForcedEntry = ForcedEntryCheck();
         _Bool isImageVerified = (_Bool)(BL_PASS == BL_ImageVerify());
         if ((!isForcedEntry) && isImageVerified)
