@@ -1,0 +1,23 @@
+build/default/debug/mcc_generated_files/bootloader/library/core/bl_core.p1:  \
+mcc_generated_files/bootloader/library/core/bl_core.c  \
+mcc_generated_files/bootloader/library/core/bl_core.h  \
+mcc_generated_files/bootloader/library/core/bl_result_type.h  \
+mcc_generated_files/bootloader/library/core/bl_config.h  \
+mcc_generated_files/bootloader/library/core/../../../system/pins.h  \
+mcc_generated_files/bootloader/library/core/../../../nvm/nvm.h  \
+mcc_generated_files/bootloader/library/core/bl_app_verify.h  \
+mcc_generated_files/bootloader/library/core/bl_memory.h  \
+mcc_generated_files/bootloader/library/core/ftp/bl_ftp.h  \
+mcc_generated_files/bootloader/library/core/ftp/../bl_result_type.h  \
+mcc_generated_files/bootloader/library/core/../com_adapter/com_adapter.h  \
+mcc_generated_files/bootloader/library/core/../com_adapter/../../../system/system.h  \
+mcc_generated_files/bootloader/library/core/../com_adapter/../../../system/../system/config_bits.h  \
+mcc_generated_files/bootloader/library/core/../com_adapter/../../../system/../system/../system/clock.h  \
+mcc_generated_files/bootloader/library/core/../com_adapter/../../../system/../system/pins.h  \
+mcc_generated_files/bootloader/library/core/../com_adapter/../../../system/../nvm/nvm.h  \
+mcc_generated_files/bootloader/library/core/../com_adapter/../../../system/../uart/uart1.h  \
+mcc_generated_files/bootloader/library/core/../com_adapter/../../../system/../uart/../system/system.h  \
+mcc_generated_files/bootloader/library/core/../com_adapter/../../../system/../uart/uart_drv_interface.h  \
+mcc_generated_files/bootloader/library/core/../com_adapter/../../../system/../uart/uart_types.h  \
+mcc_generated_files/bootloader/library/core/../com_adapter/../../../system/../system/interrupt.h  \
+mcc_generated_files/bootloader/library/core/../com_adapter/../../../system/../system/clock.h 

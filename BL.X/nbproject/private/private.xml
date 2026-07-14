@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/github/Bootloader/BL.X/config.h</file>
+            <file>file:/C:/github/Bootloader/BL.X/mcc_generated_files/nvm/nvm.h</file>
+            <file>file:/C:/github/Bootloader/BL.X/mcc_generated_files/system/src/clock.c</file>
+            <file>file:/C:/github/Bootloader/BL.X/mcc_generated_files/bootloader/library/core/bl_app_verify.c</file>
+            <file>file:/C:/github/Bootloader/BL.X/mcc_generated_files/bootloader/library/core/ftp/bl_ftp.c</file>
+            <file>file:/C:/github/Bootloader/BL.X/mcc_generated_files/bootloader/library/com_adapter/com_adapter.c</file>
+            <file>file:/C:/github/Bootloader/BL.X/mcc_generated_files/nvm/src/nvm.c</file>
+            <file>file:/C:/github/Bootloader/BL.X/mcc_generated_files/bootloader/library/core/bl_config.h</file>
+            <file>file:/C:/github/Bootloader/BL.X/mcc_generated_files/bootloader/library/core/bl_boot_verify.c</file>
+            <file>file:/C:/github/Bootloader/BL.X/mcc_generated_files/system/src/pins.c</file>
+            <file>file:/C:/github/Bootloader/BL.X/main.c</file>
+            <file>file:/C:/github/Bootloader/BL.X/mcc_generated_files/bootloader/example/bl_example.c</file>
+            <file>file:/C:/github/Bootloader/BL.X/mcc_generated_files/uart/src/uart1.c</file>
+        </group>
+    </open-files>
+</project-private>
