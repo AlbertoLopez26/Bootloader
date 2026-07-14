@@ -65,7 +65,7 @@
 * @def BL_BOOT_VERIFICATION_ENABLED
 * Defines whether the verification of bootloader space using CRC32 is enabled.
 */
-#define BL_BOOT_VERIFICATION_ENABLED (1)
+#define BL_BOOT_VERIFICATION_ENABLED (0)
 
 /**
  * @ingroup mdfu_client_8bit_core

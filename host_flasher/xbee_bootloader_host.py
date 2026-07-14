@@ -180,12 +180,12 @@ class XBeeAPI:
         Construye una trama XBee API Transmit Request (0x10).
         FrameID = 0x00 para deshabilitar la respuesta Tx Status.
         """
-        if self.dest_mac is None:
-            raise RuntimeError("Dirección MAC del destinatario no configurada.")
+        dest_mac = self.dest_mac if self.dest_mac is not None else XBEE_BROADCAST_ADDR_64
+        dest_16 = self.dest_16 if self.dest_mac is not None else XBEE_BROADCAST_ADDR_16
 
         frame_data = bytes([XBEE_TX_FRAME_TYPE, 0x00])  # Type + FrameID=0 (sin Tx Status)
-        frame_data += self.dest_mac                       # Dirección 64-bit
-        frame_data += self.dest_16                        # Dirección 16-bit
+        frame_data += dest_mac                            # Dirección 64-bit
+        frame_data += dest_16                             # Dirección 16-bit
         frame_data += bytes([0x00, 0x00])                 # Broadcast radius + Options
         frame_data += payload
 
@@ -284,7 +284,7 @@ class MDFUClient:
     def __init__(self, xbee: XBeeAPI):
         self.xbee = xbee
         self.log  = logging.getLogger("MDFUClient")
-        self.seq_num = 0     # Número de secuencia actual (0-31)
+        self.seq_num = 1     # El bootloader arranca esperando la secuencia 1
 
     def _build_ftp_frame(self, command: int, data: bytes = b'') -> bytes:
         """
@@ -299,8 +299,6 @@ class MDFUClient:
     def _next_seq(self):
         """Avanza el número de secuencia (0-31, circular)."""
         self.seq_num = (self.seq_num + 1) % (MAX_SEQUENCE + 1)
-        if self.seq_num == 0:
-            self.seq_num = 1  # Evitar 0 después del inicio
 
     def _send_and_receive(self, command: int, data: bytes = b'',
                           timeout: float = DEFAULT_TIMEOUT_S) -> tuple[bool, bytes]:
@@ -308,10 +306,9 @@ class MDFUClient:
         Envía un comando FTP y espera la respuesta con reintentos automáticos.
         Retorna (éxito, payload_de_respuesta).
         """
-        ftp_frame = self._build_ftp_frame(command, data)
-        self.log.debug(f"FTP TX -> CMD=0x{command:02X} SEQ={self.seq_num} [{len(ftp_frame)} bytes]")
-
         for attempt in range(MAX_RETRIES):
+            ftp_frame = self._build_ftp_frame(command, data)
+            self.log.debug(f"FTP TX -> CMD=0x{command:02X} SEQ={self.seq_num} [{len(ftp_frame)} bytes]")
             self.xbee.send(ftp_frame)
             time.sleep(INTER_MSG_DELAY_S)
 
@@ -320,31 +317,30 @@ class MDFUClient:
                 self.log.warning(f"Timeout esperando respuesta (intento {attempt+1}/{MAX_RETRIES})")
                 continue
 
-            if len(response) < 4:
+            # Las respuestas generadas por bl_ftp.c son [SEQ][STATUS][DATA...].
+            # El CRC de 2 bytes solo viaja en comandos host -> PIC.
+            if len(response) < 2:
                 self.log.warning(f"Respuesta demasiado corta ({len(response)} bytes)")
                 continue
 
-            # Verificar CRC de la respuesta
-            resp_body = response[:-2]
-            resp_crc  = response[-2:]
-            expected_crc = crc16_bytes(resp_body)
-            if resp_crc != expected_crc:
-                self.log.warning(f"CRC de respuesta inválido: got={resp_crc.hex()} expected={expected_crc.hex()}")
-                continue
+            resp_seq_byte = response[0]
+            resp_seq    = resp_seq_byte & SEQ_NUMBER_MASK
+            resp_status = response[1]
+            resp_data   = response[2:]
+            retry_bit = (resp_seq_byte & SEQ_RETRY_BIT) != 0
 
-            resp_seq    = resp_body[0] & SEQ_NUMBER_MASK
-            resp_status = resp_body[1]
-            resp_data   = resp_body[2:]
+            if retry_bit:
+                if resp_seq != (self.seq_num & SEQ_NUMBER_MASK):
+                    self.log.warning(f"Bootloader solicita SEQ={resp_seq}; ajustando y reenviando")
+                    self.seq_num = resp_seq
+                else:
+                    self.log.warning(f"Bootloader solicita reenvío de SEQ={self.seq_num}")
+                continue
 
             # Verificar que la respuesta corresponde a nuestro número de secuencia
             if resp_seq != (self.seq_num & SEQ_NUMBER_MASK):
-                retry_bit = (resp_body[0] & SEQ_RETRY_BIT) != 0
-                if retry_bit:
-                    self.log.warning(f"Bootloader solicita reenvío (SEQ esperado={self.seq_num}, recibido={resp_seq})")
-                    continue
-                else:
-                    self.log.warning(f"Número de secuencia inesperado en respuesta: got={resp_seq} expected={self.seq_num}")
-                    continue
+                self.log.warning(f"Número de secuencia inesperado en respuesta: got={resp_seq} expected={self.seq_num}")
+                continue
 
             if resp_status == FTPStatus.COMMAND_SUCCESS:
                 self._next_seq()
@@ -475,7 +471,7 @@ class HexProcessor:
             raise ValueError(f"Error cargando el archivo .hex: {e}")
         self.log.info(f"Archivo .hex cargado: {hex_path}")
 
-    def get_app_pages(self) -> list[tuple[int, bytes]]:
+    def get_app_pages(self, app_crc: int | None = None) -> list[tuple[int, bytes]]:
         """
         Extrae las páginas de flash del rango de la aplicación.
         Retorna una lista de (address, page_data) donde len(page_data) == PAGE_SIZE.
@@ -484,7 +480,9 @@ class HexProcessor:
         pages = []
 
         # Calcular el rango que contiene datos de la app (excluyendo los últimos 2 bytes de CRC)
-        app_data_end = APP_END_ADDRESS - HASH_DATA_SIZE  # Último byte antes del CRC
+        hash_store_addr = APP_END_ADDRESS - HASH_DATA_SIZE + 1
+        app_data_end = hash_store_addr - 1  # Último byte antes del CRC
+        crc_page_addr = hash_store_addr - (hash_store_addr % PAGE_SIZE)
 
         # Iterar en bloques de PAGE_SIZE alineados
         addr = APP_START_ADDRESS
@@ -502,6 +500,11 @@ class HexProcessor:
                 page_bytes[offset] = byte_val
                 if byte_val != 0xFF:
                     has_data = True
+
+            if app_crc is not None and addr == crc_page_addr:
+                crc_offset = hash_store_addr - addr
+                page_bytes[crc_offset:crc_offset + HASH_DATA_SIZE] = struct.pack('<H', app_crc)
+                has_data = True
 
             if has_data:
                 pages.append((addr, bytes(page_bytes)))
@@ -634,12 +637,12 @@ def flash_firmware(port: str, hex_path: str, baudrate: int = 115200,
         log.error(f"Error al cargar el .hex: {e}")
         return False
 
-    pages = proc.get_app_pages()
+    crc = proc.compute_crc16()
+
+    pages = proc.get_app_pages(app_crc=crc)
     if not pages:
         log.error("No se encontraron páginas de aplicación en el archivo .hex")
         return False
-
-    crc = proc.compute_crc16()
 
     # --- Abrir puerto serie y XBee ---
     log.info(f"\n[2/8] Abriendo puerto {port} @ {baudrate} bps")

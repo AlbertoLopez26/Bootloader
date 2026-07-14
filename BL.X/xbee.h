@@ -1,5 +1,5 @@
-#ifndef XC_HEADER_TEMPLATE_H
-#define XC_HEADER_TEMPLATE_H  
+#ifndef XBEE_H
+#define XBEE_H  
 
 #include <xc.h>
 #include <stdbool.h>
@@ -10,4 +10,4 @@
 #define XBEE_RX_FRAME_TYPE   0x90
 #define XBEE_TX_FRAME_TYPE   0x10
 
-#endif /* XC_HEADER_TEMPLATE_H */
+#endif /* XBEE_H */

@@ -15,9 +15,17 @@ static uint8_t senderMAC[8] = {0};
 static uint8_t sender16Bit[2] = {0};
 static uint16_t MaxBufferLength = 0U;
 
+static void UartWriteBlocking(uint8_t val)
+{
+    while (!UART1_IsTxReady())
+    {
+    }
+    UART1_Write(val);
+}
+
 // Funcion auxiliar estatica local para enviar por UART y sumar al Checksum
 static uint8_t SendAndCheck(uint8_t val, uint8_t checksum) {
-    UART1_Write(val);
+    UartWriteBlocking(val);
     return (uint8_t)(checksum + val);
 }
 
@@ -140,9 +148,9 @@ com_adapter_result_t COM_FrameSet(uint8_t *sourceBuffer, uint16_t sendCount)
     uint8_t checksum = 0;
     
     // 1. Enviar delimitador de inicio y longitud
-    UART1_Write(XBEE_START_DELIMITER);
-    UART1_Write((uint8_t)(xbeeDataLen >> 8));
-    UART1_Write((uint8_t)(xbeeDataLen & 0xFF));
+    UartWriteBlocking(XBEE_START_DELIMITER);
+    UartWriteBlocking((uint8_t)(xbeeDataLen >> 8));
+    UartWriteBlocking((uint8_t)(xbeeDataLen & 0xFF));
     
     // 2. Cabecera XBee Transmit Request (0x10)
     checksum = SendAndCheck(XBEE_TX_FRAME_TYPE, checksum); // 0x10
@@ -167,7 +175,7 @@ com_adapter_result_t COM_FrameSet(uint8_t *sourceBuffer, uint16_t sendCount)
     }
     
     // 7. Enviar Checksum final del XBee
-    UART1_Write((uint8_t)(0xFF - checksum));
+    UartWriteBlocking((uint8_t)(0xFF - checksum));
     
     return COM_PASS;
 }
