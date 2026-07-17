@@ -43,7 +43,7 @@ void PIN_MANAGER_Initialize(void)
     LATA = 0x0;
     LATB = 0x0;
     LATC = 0x0;
-    LATD = 0x2;
+    LATD = 0x2; // RD2 low keeps XBee RTS allowing UART RX.
     LATE = 0x0;
     /**
     ODx registers
@@ -60,7 +60,7 @@ void PIN_MANAGER_Initialize(void)
     TRISA = 0xFF;
     TRISB = 0xFF;
     TRISC = 0xBF;
-    TRISD = 0xFD;
+    TRISD = 0xF9;
     TRISE = 0xF;
 
     /**
@@ -69,7 +69,7 @@ void PIN_MANAGER_Initialize(void)
     ANSELA = 0xFF;
     ANSELB = 0xFF;
     ANSELC = 0x3F;
-    ANSELD = 0xFD;
+    ANSELD = 0xF9;
     ANSELE = 0x7;
 
     /**

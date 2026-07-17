@@ -2542,10 +2542,10 @@ l1191:; BSR set to: 2
 	movlw	low(08h)
 	movwf	((685))&0ffh	;volatile
 	line	96
-	movlw	low(082h)
+	movlw	low(0A0h)
 	movwf	((686))&0ffh	;volatile
 	line	97
-	movlw	low(06h)
+	movlw	low(01h)
 	movwf	((687))&0ffh	;volatile
 	line	98
 	movlw	low(02Eh)
@@ -2645,7 +2645,7 @@ l1147:; BSR set to: 4
 	movlw	low(03Fh)
 	movwf	((1040))&0ffh	;volatile
 	line	46
-	movlw	low(0FDh)
+	movlw	low(0F9h)
 	movwf	((1048))&0ffh	;volatile
 	line	47
 	movlw	low(07h)
@@ -2664,7 +2664,7 @@ l1151:; BSR set to: 4
 	movlw	low(0BFh)
 	movwf	((c:1224))^0400h,c	;volatile
 	line	52
-	movlw	low(0FDh)
+	movlw	low(0F9h)
 	movwf	((c:1225))^0400h,c	;volatile
 	line	53
 	movlw	low(0Fh)

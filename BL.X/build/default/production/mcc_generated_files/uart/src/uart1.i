@@ -29386,8 +29386,8 @@ void UART1_Initialize(void)
 
     U1CON2 = 0x8;
 
-    U1BRGL = 0x82;
-    U1BRGH = 0x06;
+    U1BRGL = 0xA0;
+    U1BRGH = 0x01;
 
     U1FIFO = 0x2E;
 

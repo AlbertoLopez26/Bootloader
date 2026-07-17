@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V3.10 build 20250813170317 
-                                                                                               Thu Jul 16 10:20:17 2026
+                                                                                               Thu Jul 16 12:59:28 2026
 
 Microchip MPLAB XC8 C Compiler v3.10 (Free license) build 20250813170317 Og1 
      1                           	processor	18F47Q43
@@ -14014,8 +14014,8 @@ Microchip MPLAB XC8 C Compiler v3.10 (Free license) build 20250813170317 Og1
  13970   000D0A  0EBF               	movlw	191
  13971   000D0C  6EC8               	movwf	200,c	;volatile
  13972                           
- 13973                           ;mcc_generated_files/system/src/pins.c: 63:     TRISD = 0xFD;
- 13974   000D0E  0EFD               	movlw	253
+ 13973                           ;mcc_generated_files/system/src/pins.c: 63:     TRISD = 0xF9;
+ 13974   000D0E  0EF9               	movlw	249
  13975   000D10  6EC9               	movwf	201,c	;volatile
  13976                           
  13977                           ;mcc_generated_files/system/src/pins.c: 64:     TRISE = 0xF;
@@ -14034,8 +14034,8 @@ Microchip MPLAB XC8 C Compiler v3.10 (Free license) build 20250813170317 Og1
  13990   000D1A  0E3F               	movlw	63
  13991   000D1C  6F10               	movwf	16,b	;volatile
  13992                           
- 13993                           ;mcc_generated_files/system/src/pins.c: 72:     ANSELD = 0xFD;
- 13994   000D1E  0EFD               	movlw	253
+ 13993                           ;mcc_generated_files/system/src/pins.c: 72:     ANSELD = 0xF9;
+ 13994   000D1E  0EF9               	movlw	249
  13995   000D20  6F18               	movwf	24,b	;volatile
  13996                           
  13997                           ;mcc_generated_files/system/src/pins.c: 73:     ANSELE = 0x7;
@@ -15364,12 +15364,12 @@ Microchip MPLAB XC8 C Compiler v3.10 (Free license) build 20250813170317 Og1
  15155   001110  0E08               	movlw	8
  15156   001112  6FAD               	movwf	173,b	;volatile
  15157                           
- 15158                           ;mcc_generated_files/uart/src/uart1.c: 128:     U1BRGL = 0x82;
- 15159   001114  0E82               	movlw	130
+ 15158                           ;mcc_generated_files/uart/src/uart1.c: 128:     U1BRGL = 0xA0;
+ 15159   001114  0EA0               	movlw	160
  15160   001116  6FAE               	movwf	174,b	;volatile
  15161                           
- 15162                           ;mcc_generated_files/uart/src/uart1.c: 129:     U1BRGH = 0x06;
- 15163   001118  0E06               	movlw	6
+ 15162                           ;mcc_generated_files/uart/src/uart1.c: 129:     U1BRGH = 0x01;
+ 15163   001118  0E01               	movlw	1
  15164   00111A  6FAF               	movwf	175,b	;volatile
  15165                           
  15166                           ;mcc_generated_files/uart/src/uart1.c: 131:     U1FIFO = 0x2E;
@@ -25287,7 +25287,7 @@ DATA                 0      0     787      0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V3.10 build 20250813170317 
-Symbol Table                                                                                   Thu Jul 16 10:20:17 2026
+Symbol Table                                                                                   Thu Jul 16 12:59:28 2026
 
                        FLASH_RowWrite@rowWriteStatus 0512                                 ?_BL_ApplicationStart 0501  
                                         _rowWriteKey 058E                         DownloadAreaErase@errorStatus 0517  

@@ -52,8 +52,22 @@ Los XBee deben estar en:
 
 ```text
 AP = 1
-BD = 3   # 9600 bps
 AO = 0   # API Rx Indicator 0x90
+```
+
+Baud recomendado con el bootloader actual:
+
+```text
+XBee remoto hacia PIC: BD = 5   # 38400 bps
+XBee local hacia PC:  usar el baud configurado en el adaptador local
+```
+
+Flow control compatible con la configuracion actual de XCTU:
+
+```text
+D6 / RTS = 1   # RTS flow control
+D7 / CTS = 1   # CTS flow control
+PIC RD2  -> XBee D6/RTS, mantenido en bajo para permitir RX
 ```
 
 ## Comandos utiles
@@ -82,4 +96,3 @@ python ..\host_flasher\xbee_bootloader_host.py --port COM8 --mac 0013A2004240FDC
 Si el PIC ya salto a la aplicacion, el bootloader no escucha comandos MDFU.
 Para actualizar sin tocar la tarjeta, la aplicacion debe implementar el comando
 remoto `BOOT`, escribir `0xAA` en EEPROM `0x380000` y ejecutar `RESET()`.
-

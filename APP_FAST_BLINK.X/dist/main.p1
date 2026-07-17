@@ -1946,7 +1946,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "45
 [e = _ANSELC -> -> 63 `i `uc ]
 "46
-[e = _ANSELD -> -> 253 `i `uc ]
+[e = _ANSELD -> -> 249 `i `uc ]
 "47
 [e = _ANSELE -> -> 7 `i `uc ]
 "49
@@ -1956,7 +1956,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "51
 [e = _TRISC -> -> 191 `i `uc ]
 "52
-[e = _TRISD -> -> 253 `i `uc ]
+[e = _TRISD -> -> 249 `i `uc ]
 "53
 [e = _TRISE -> -> 15 `i `uc ]
 "55
@@ -2035,9 +2035,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "95
 [e = _U1CON2 -> -> 8 `i `uc ]
 "96
-[e = _U1BRGL -> -> 130 `i `uc ]
+[e = _U1BRGL -> -> 160 `i `uc ]
 "97
-[e = _U1BRGH -> -> 6 `i `uc ]
+[e = _U1BRGH -> -> 1 `i `uc ]
 "98
 [e = _U1FIFO -> -> 46 `i `uc ]
 "99

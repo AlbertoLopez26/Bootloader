@@ -24,7 +24,8 @@
 
  Configuración XBee:
    - AP = 1  (API Mode Without Escapes)
-   - BD = 3  (9600 bps)
+   - XBee remoto hacia el PIC: BD = 5 (38400 bps)
+   - XBee local hacia la PC: usar --baud segun su BD local
    - Mismo PAN ID en ambos módulos
 ========================================================================
 """

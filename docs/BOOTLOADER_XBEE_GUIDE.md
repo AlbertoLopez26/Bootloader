@@ -11,7 +11,7 @@ El ejemplo actual usa:
 - IDE: `MPLAB X`
 - Bootloader: Microchip MDFU Client 8-bit
 - Transporte: XBee SX en API mode, usando UART1
-- UART entre PIC y XBee remoto: `9600 8N1`
+- UART entre PIC y XBee remoto: `38400 8N1`
 - XBee local al PC: `COM8` a `9600 bps` en las pruebas
 
 ## 1. Arquitectura
@@ -25,7 +25,7 @@ PC host flasher
   v
 XBee local  <---- RF ---->  XBee remoto
                               |
-                              | UART1 9600 8N1
+                              | UART1 38400 8N1
                               v
                          PIC18F47Q43
                          Bootloader + aplicacion
@@ -79,7 +79,7 @@ Para recrear el bootloader desde cero en otro proyecto:
    - `64 MHz`
 4. Agregar UART1.
 5. Configurar UART1:
-   - Baud: `9600`
+   - Baud: `38400`
    - Data bits: `8`
    - Parity: `None`
    - Stop bits: `1`
@@ -114,7 +114,7 @@ La verificacion del bootloader con CRC32 se dejo apagada porque no es necesaria
 para el flujo actual y puede bloquear el arranque si el checksum del area de
 bootloader no coincide con el generado.
 
-### 3.2. UART1 a 9600 bps
+### 3.2. UART1 a 38400 bps
 
 En `BL.X/mcc_generated_files/uart/src/uart1.c`, con FOSC de `64 MHz` y BRGS en
 high speed:
@@ -124,9 +124,9 @@ U1CON0 = 0xB0;
 U1CON1 = 0x80;
 U1CON2 = 0x08;
 
-// 9600 bps @ 64 MHz, BRGS high speed
-U1BRGL = 0x82;
-U1BRGH = 0x06;
+// 38400 bps @ 64 MHz, BRGS high speed
+U1BRGL = 0xA0;
+U1BRGH = 0x01;
 ```
 
 Si regeneras MCC, revisa que estos valores no regresen a `115200`.
@@ -223,10 +223,10 @@ Configura ambos XBee con XCTU.
 | Parametro | Valor |
 | --- | --- |
 | Port | `COM8` en las pruebas |
-| Baud | `9600` |
+| Baud | El configurado en el XBee local; en las pruebas puede seguir en `9600` |
 | Data format | `8/N/1` |
 | `AP` | `1` API Mode Without Escapes |
-| `BD` | `3` 9600 bps |
+| `BD` | Segun el baud local usado por `--baud` |
 | `AO` | `0` API Rx Indicator `0x90` |
 | `ID` | Mismo PAN ID que el remoto |
 
@@ -234,11 +234,13 @@ Configura ambos XBee con XCTU.
 
 | Parametro | Valor |
 | --- | --- |
-| Baud | `9600` |
+| Baud | `38400` |
 | Data format | `8/N/1` |
 | `AP` | `1` API Mode Without Escapes |
-| `BD` | `3` 9600 bps |
+| `BD` | `5` 38400 bps |
 | `AO` | `0` API Rx Indicator `0x90` |
+| `D6` | `1` RTS flow control |
+| `D7` | `1` CTS flow control |
 | `ID` | Mismo PAN ID que el local |
 | UART DIN/DOUT | Conectado a PIC UART1 |
 
@@ -247,9 +249,16 @@ Conexion UART recomendada:
 ```text
 PIC RC6 / UART1 TX  -> XBee DIN
 PIC RC7 / UART1 RX  <- XBee DOUT
+PIC RD2 / RTS       -> XBee D6/RTS
 GND                 <-> GND
 3.3 V               -> XBee VCC
 ```
+
+Con `D6/RTS` activo, el XBee solo envia datos al PIC cuando la linea RTS del
+host esta en nivel de permitir recepcion. En este repo el bootloader y las apps
+ejemplo dejan `RD2` como salida digital en bajo para que el XBee pueda entregar
+las tramas `0x90`. Si una placa usa otro pin para RTS, actualiza `TRISx`,
+`ANSELx` y `LATx` en el bootloader y en la aplicacion.
 
 Importante: el XBee es de `3.3 V`. No alimentarlo con `5 V` ni meter senales
 de `5 V` directas a sus pines.
@@ -449,8 +458,8 @@ static void UartInitialize(void)
     U1CON0 = 0xB0;
     U1CON1 = 0x80;
     U1CON2 = 0x08;
-    U1BRGL = 0x82;
-    U1BRGH = 0x06;
+    U1BRGL = 0xA0;
+    U1BRGH = 0x01;
     U1FIFO = 0x2E;
     U1UIR = 0x00;
     U1ERRIR = 0x80;
@@ -597,7 +606,7 @@ Checklist para migrar un proyecto existente sin bootloader:
    - Verificar low vector en `0x3018`.
 5. Agregar la bandera `BOOT_FLAG_ADDRESS = 0x380000`.
 6. Agregar `EepromWriteByte()` y `RequestBootloader()`.
-7. Agregar inicializacion UART1 a `9600 8N1` o integrar con tu driver UART.
+7. Agregar inicializacion UART1 a `38400 8N1` o integrar con tu driver UART.
 8. Agregar parser XBee API `0x90` para payload `BOOT`.
 9. Llamar `XBeeCommandTask()` periodicamente.
 10. Compilar y revisar el `.map`.
@@ -697,6 +706,7 @@ Causas comunes:
 - PIC esta corriendo la app, no el bootloader.
 - App no trae receptor `BOOT`.
 - UART PIC-XBee remoto no coincide en baud.
+- `D6/RTS` activo pero el PIC no mantiene la linea RTS en nivel de permitir RX.
 - TX/RX cruzados incorrectamente.
 - XBee remoto no esta conectado al UART correcto.
 
@@ -759,7 +769,7 @@ python ..\host_flasher\xbee_bootloader_host.py --port COM8 --mac 0013A2004240FDC
 - App no debe escribir config bits.
 - App no debe usar `0x1FFFE..0x1FFFF`.
 - XBee local y remoto en `AP=1`.
-- XBee local y remoto en `BD=3` si el PIC esta a `9600`.
+- XBee remoto en `BD=5` si el PIC esta a `38400`; el XBee local debe coincidir con el `--baud` del script.
 - El PIC no entiende MDFU si ya salto a la app.
 - La app debe tener comando remoto `BOOT` si quieres actualizar sin tocar la
   tarjeta.

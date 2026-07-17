@@ -37,19 +37,19 @@ static void PinsInitialize(void)
     LATA = 0x00;
     LATB = 0x00;
     LATC = 0x00;
-    LATD = 0x02;
+    LATD = 0x02; // RD2 low keeps XBee RTS allowing UART RX.
     LATE = 0x00;
 
     ANSELA = 0xFF;
     ANSELB = 0xFF;
     ANSELC = 0x3F;
-    ANSELD = 0xFD;
+    ANSELD = 0xF9;
     ANSELE = 0x07;
 
     TRISA = 0xFF;
     TRISB = 0xFF;
     TRISC = 0xBF;
-    TRISD = 0xFD;
+    TRISD = 0xF9;
     TRISE = 0x0F;
 
     ODCONA = 0x00;
@@ -93,8 +93,8 @@ static void UartInitialize(void)
     U1CON0 = 0xB0;
     U1CON1 = 0x80;
     U1CON2 = 0x08;
-    U1BRGL = 0x82;
-    U1BRGH = 0x06;
+    U1BRGL = 0xA0;
+    U1BRGH = 0x01;
     U1FIFO = 0x2E;
     U1UIR = 0x00;
     U1ERRIR = 0x80;

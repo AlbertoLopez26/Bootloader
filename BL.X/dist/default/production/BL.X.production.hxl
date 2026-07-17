@@ -1,7 +1,7 @@
 ### HEXMate logfile and output summary ###
 
 ### Command-line arguments ###
- C:\Users\ernes\AppData\Local\Temp\xcAs1794.0\driver_tmp_3.o
+ C:\Users\ernes\AppData\Local\Temp\xcAsoz4.0\driver_tmp_3.o
  -Odist/default/production\BL.X.production.hex
  -logfile=dist/default/production\BL.X.production.hxl
  -addressing=1
@@ -11,13 +11,13 @@
 
 ### Memory Usage ###
  Input file ranges:
-  0h - 3h		(C:\Users\ernes\AppData\Local\Temp\xcAs1794.0\driver_tmp_3.o)
-  8h - 1575h		(C:\Users\ernes\AppData\Local\Temp\xcAs1794.0\driver_tmp_3.o)
-  1578h - 16BDh		(C:\Users\ernes\AppData\Local\Temp\xcAs1794.0\driver_tmp_3.o)
-  16C0h - 16C7h		(C:\Users\ernes\AppData\Local\Temp\xcAs1794.0\driver_tmp_3.o)
-  2600h - 2FFFh		(C:\Users\ernes\AppData\Local\Temp\xcAs1794.0\driver_tmp_3.o)
-  300000h - 300007h		(C:\Users\ernes\AppData\Local\Temp\xcAs1794.0\driver_tmp_3.o)
-  300009h - 300009h		(C:\Users\ernes\AppData\Local\Temp\xcAs1794.0\driver_tmp_3.o)
+  0h - 3h		(C:\Users\ernes\AppData\Local\Temp\xcAsoz4.0\driver_tmp_3.o)
+  8h - 1575h		(C:\Users\ernes\AppData\Local\Temp\xcAsoz4.0\driver_tmp_3.o)
+  1578h - 16BDh		(C:\Users\ernes\AppData\Local\Temp\xcAsoz4.0\driver_tmp_3.o)
+  16C0h - 16C7h		(C:\Users\ernes\AppData\Local\Temp\xcAsoz4.0\driver_tmp_3.o)
+  2600h - 2FFFh		(C:\Users\ernes\AppData\Local\Temp\xcAsoz4.0\driver_tmp_3.o)
+  300000h - 300007h		(C:\Users\ernes\AppData\Local\Temp\xcAsoz4.0\driver_tmp_3.o)
+  300009h - 300009h		(C:\Users\ernes\AppData\Local\Temp\xcAsoz4.0\driver_tmp_3.o)
  Stored checksum result ranges:
   7FFCh - 7FFFh		(+-ck=0-7FFB@7FFC+FFFFFFFFw-4g-5p4C11DB7r0s0.1)
  Filled ROM ranges:
@@ -31,12 +31,12 @@
   300008h - 300008h
 
 ### Checksum Reports ###
- Checksum 0 (+-ck=0-7FFB@7FFC+FFFFFFFFw-4g-5p4C11DB7r0s0.1): (0h to 7FFBh) = 0xCE4A3E89
+ Checksum 0 (+-ck=0-7FFB@7FFC+FFFFFFFFw-4g-5p4C11DB7r0s0.1): (0h to 7FFBh) = 0x37E2F009
 
 ### Hex Memory Map ###
  Legend:
   -- = Unused memory
-  H1 = Input file             (C:\Users\ernes\AppData\Local\Temp\xcAs1794.0\driver_tmp_3.o)
+  H1 = Input file             (C:\Users\ernes\AppData\Local\Temp\xcAsoz4.0\driver_tmp_3.o)
   F1 = Filled ROM             (-fill=0xFFFF@0x0:0x7FFB)
   C1 = Stored checksum result (+-ck=0-7FFB@7FFC+FFFFFFFFw-4g-5p4C11DB7r0s0.1)
 ----------------------------------------------------------
